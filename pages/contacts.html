@@ -4,23 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Контакты</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <style>
+        .contact-info {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        .contact-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        .contact-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
 </head>
 <body>
-    <div id="header">Хэдер</div>
-    <div id="menu">
-        <ul>
-            <li><a href="../index.html">Главная</a></li>
-            <li><a href="..//pages/news.html">Новости</a></li>
-            <li><a href="../pages/practices.html">Практики</a></li>
-            <li><a href="../pages/goods.html">Товары</a></li>
-            <li><a href="../pages/contacts.html">Контакты</a></li>
-        </ul>
+    <div class="page-container">
+        <div class="header">Хэдер</div>
+        <div class="nav">
+            <ul class="nav-list">
+                <li class="nav-item"><a class="nav-link" href="../index.html">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="news.html">Новости</a></li>
+                <li class="nav-item"><a class="nav-link" href="practices.html">Практики</a></li>
+                <li class="nav-item"><a class="nav-link" href="goods.html">Товары</a></li>
+                <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h2 class="section-title">Контакты</h2>
+            <div class="contact-info">
+                <p><strong>Email:</strong> yura.blashchenko@mail.ru</p>
+                <p><strong>Адрес:</strong> г. Москва, просп. Вернадского, 86, стр. 6</p>
+                <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
+                <button class="contact-button">Позвоните мне</button>
+            </div>
+        </div>
+        <div class="footer">Футер</div>
     </div>
-    <div id="content">
-        <p>Email: yura.blashchenko@mail.ru</p>
-        <p>Адрес: г. Москва, просп. Вернадского, 86, стр. 6</p>
-        <button>Позвоните мне</button>
-    </div>
-    <div id="footer">Футер</div>
 </body>
 </html>
