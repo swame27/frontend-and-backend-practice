@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Товары</title>
+    <style>
+        .product-img {
+            max-width: 100%;
+            height: auto;
+            width: 300px; /* базовый размер */
+        }
+        
+        .product-item {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div id="header">Хэдер</div>
@@ -17,19 +29,19 @@
         </ul>
     </div>
     <div id="content">
-        <div>
-            <img src="../images/goods1.jpg" alt="Товар 1">
+        <div class="product-item">
+            <img src="../images/goods1.jpg" alt="iPhone 17 pro max" class="product-img">
             <p>iPhone 17 pro max</p>
             <p>Цена: 87 990 руб.</p>
         </div>
-        <div>
-            <img src="../images/goods2.jpg" alt="Товар 1">
-            <p>macnook m4 </p>
+        <div class="product-item">
+            <img src="../images/goods2.jpg" alt="Macbook m4" class="product-img">
+            <p>Macbook m4</p>
             <p>Цена: 78 600 руб.</p>
         </div>
-        <div>
-            <img src="../images/goods3.jpg" alt="Товар 1">
-            <p>Applewatch series 10 </p>
+        <div class="product-item">
+            <img src="../images/goods3.jpg" alt="Apple Watch series 10" class="product-img">
+            <p>Apple Watch series 10</p>
             <p>Цена: 25 689 руб.</p>
         </div>
     </div>
