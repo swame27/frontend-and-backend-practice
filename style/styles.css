@@ -1,255 +1,188 @@
-/* ==== БАЗОВЫЕ СТИЛИ И ПЕРЕМЕННЫЕ ==== */
-:root {
-    --primary-color: #6366f1;
-    --secondary-color: #8b5cf6;
-    --accent-color: #06b6d4;
-    --dark-color: #1e293b;
-    --light-color: #f8fafc;
-    --success-color: #10b981;
-    --warning-color: #f59e0b;
-    --danger-color: #ef4444;
-    --text-dark: #334155;
-    --text-light: #64748b;
-    --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
-    --border-radius: 16px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-* {
+/* ==== БАЗОВЫЕ СТИЛИ ==== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
-    line-height: 1.6;
-    color: var(--text-dark);
 }
 
 /* ==== КОНТЕЙНЕР СТРАНИЦЫ ==== */
 .page-container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
-    background: var(--light-color);
+    background: white;
     min-height: 100vh;
-    box-shadow: var(--shadow);
-    position: relative;
-    overflow: hidden;
-}
-
-.page-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-    z-index: 100;
+    box-shadow: 0 0 30px rgba(0,0,0,0.1);
 }
 
 /* ==== ШАПКА ==== */
 .header {
-    background: linear-gradient(135deg, var(--dark-color) 0%, #334155 100%);
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
     color: white;
     text-align: center;
-    padding: 40px 30px;
-    position: relative;
-    overflow: hidden;
-}
-
-.header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" opacity="0.1"><polygon points="0,0 1000,50 1000,100 0,100" fill="white"/></svg>');
-    background-size: cover;
-}
-
-.header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0;
-    position: relative;
-    z-index: 2;
-    background: linear-gradient(135deg, #fff, #e2e8f0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    padding: 30px;
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 2px;
 }
 
 /* ==== НАВИГАЦИЯ ==== */
 .nav {
-    background: white;
-    padding: 0;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    position: sticky;
-    top: 0;
-    z-index: 99;
+    background: #2c3e50;
+    padding: 20px 0;
 }
 
 .nav-list {
     list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    gap: 25px;
 }
 
 .nav-item {
     margin: 0;
-    position: relative;
 }
 
 .nav-link {
-    color: var(--text-dark);
+    color: white;
     text-decoration: none;
-    padding: 20px 25px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
     font-weight: 500;
-    transition: var(--transition);
-    display: block;
-    position: relative;
-    border-bottom: 3px solid transparent;
 }
 
 .nav-link:hover {
-    color: var(--primary-color);
-    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-    border-bottom-color: var(--primary-color);
-}
-
-.nav-link.active {
-    color: var(--primary-color);
-    border-bottom-color: var(--primary-color);
-    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
 }
 
 /* ==== ОСНОВНОЙ КОНТЕНТ ==== */
 .content {
-    padding: 60px 40px;
-    max-width: 1200px;
+    padding: 40px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
-/* ==== ОБЩИЕ КОМПОНЕНТЫ ==== */
-.section-title {
-    font-size: 2.5rem;
-    color: var(--dark-color);
+/* ==== ГЛАВНАЯ СТРАНИЦА ==== */
+.profile-header {
     text-align: center;
-    margin-bottom: 3rem;
-    font-weight: 700;
-    position: relative;
+    margin-bottom: 40px;
 }
 
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    border-radius: 2px;
+.profile-title {
+    font-size: 32px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-weight: 300;
 }
 
-.card {
+.profile-photo {
+    width: 220px;
+    height: 280px;
+    border-radius: 15px;
+    object-fit: cover;
+    margin: 20px auto;
+    border: 4px solid #667eea;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.profile-name {
+    font-size: 24px;
+    color: #2c3e50;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.profile-group {
+    font-size: 18px;
+    color: #7f8c8d;
+    margin: 5px 0;
+}
+
+.about-me {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 25px;
+    border-radius: 15px;
+    margin: 30px 0;
+    border-left: 5px solid #667eea;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* ==== НАВЫКИ ==== */
+.skills-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.skill-tag {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+    transition: all 0.3s ease;
+}
+
+.skill-tag:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+}
+
+/* ==== ОПЫТ РАБОТЫ ==== */
+.experience-section {
+    margin-top: 50px;
+}
+
+.section-title {
+    font-size: 28px;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.experience-card {
     background: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    border: 1px solid #e2e8f0;
-    overflow: hidden;
+    padding: 25px;
+    margin: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border-left: 4px solid #667eea;
+    transition: transform 0.3s ease;
 }
 
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-hover);
+.experience-card:hover {
+    transform: translateX(5px);
+}
+
+.experience-title {
+    font-size: 20px;
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+    font-weight: 600;
+}
+
+.experience-desc {
+    color: #7f8c8d;
+    line-height: 1.6;
+    margin: 0;
 }
 
 /* ==== ФУТЕР ==== */
 .footer {
-    background: linear-gradient(135deg, var(--dark-color) 0%, #334155 100%);
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
     color: white;
     text-align: center;
-    padding: 40px 30px;
-    margin-top: 80px;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    text-align: left;
-}
-
-.footer-section h3 {
-    color: var(--accent-color);
-    margin-bottom: 20px;
-    font-size: 1.2rem;
-}
-
-.footer-section p {
-    color: #cbd5e1;
-    line-height: 1.8;
-}
-
-.footer-bottom {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid #475569;
-    color: #94a3b8;
-}
-
-/* ==== АНИМАЦИИ ==== */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.fade-in {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-/* ==== АДАПТИВНОСТЬ ==== */
-@media (max-width: 768px) {
-    .nav-list {
-        flex-direction: column;
-        gap: 0;
-    }
-    
-    .nav-link {
-        padding: 15px 20px;
-        width: 100%;
-        text-align: center;
-    }
-    
-    .content {
-        padding: 40px 20px;
-    }
-    
-    .section-title {
-        font-size: 2rem;
-    }
-    
-    .header h1 {
-        font-size: 2rem;
-    }
+    padding: 30px;
+    margin-top: 50px;
 }
