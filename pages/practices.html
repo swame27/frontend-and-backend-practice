@@ -3,37 +3,1486 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Практики</title>
+    <title>Практики | Digital Портфолио</title>
     <link rel="stylesheet" href="../style/styles.css">
+    <style>
+        .practices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+
+        .practice-card {
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .practice-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .practice-card__header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--color-border);
+            position: relative;
+        }
+
+        .practice-card__level {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            padding: 4px 12px;
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 700;
+            color: var(--color-white);
+        }
+
+        .practice-card__level--beginner {
+            background: var(--color-success);
+        }
+
+        .practice-card__level--intermediate {
+            background: var(--color-warning);
+        }
+
+        .practice-card__level--advanced {
+            background: var(--color-danger);
+        }
+
+        .practice-card__icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-md);
+            font-size: 1.8rem;
+            color: var(--color-white);
+        }
+
+        .practice-card__title {
+            font-size: var(--font-size-xl);
+            color: var(--color-dark);
+            margin: 0 0 var(--spacing-xs) 0;
+            line-height: 1.3;
+        }
+
+        body.dark-theme .practice-card__title {
+            color: var(--color-dark-text);
+        }
+
+        .practice-card__description {
+            color: var(--color-text-light);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .practice-card__body {
+            padding: var(--spacing-lg);
+            flex-grow: 1;
+        }
+
+        .practice-card__features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 var(--spacing-lg) 0;
+        }
+
+        .practice-card__feature {
+            padding: var(--spacing-xs) 0;
+            color: var(--color-text);
+            position: relative;
+            padding-left: 24px;
+            line-height: 1.5;
+        }
+
+        .practice-card__feature:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-success);
+            font-weight: bold;
+        }
+
+        body.dark-theme .practice-card__feature {
+            color: var(--color-dark-text-light);
+        }
+
+        .practice-card__meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .practice-card__duration {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--color-text-light);
+            font-size: var(--font-size-sm);
+        }
+
+        .practice-card__progress {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--color-light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        body.dark-theme .progress-bar {
+            background: var(--color-dark-light);
+        }
+
+        .progress-bar__fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-light);
+        }
+
+        .practice-card__footer {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .practice-card__button {
+            flex: 1;
+        }
+
+        .practice-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: 2px solid var(--color-border);
+            background: var(--color-white);
+            color: var(--color-text);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        body.dark-theme .tab-btn {
+            background: var(--color-dark-surface);
+            border-color: var(--color-dark-light);
+            color: var(--color-dark-text);
+        }
+
+        .tab-btn:hover,
+        .tab-btn--active {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: var(--color-white);
+            transform: translateY(-2px);
+        }
+
+        .practice-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            background: var(--color-white);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-normal);
+        }
+
+        body.dark-theme .stat-card {
+            background: var(--color-dark-surface);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card__value {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat-card__label {
+            color: var(--color-text-light);
+            font-size: var(--font-size-sm);
+        }
+
+        .practice-category {
+            margin-top: var(--spacing-xl);
+        }
+
+        .practice-category__title {
+            font-size: var(--font-size-2xl);
+            color: var(--color-dark);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        body.dark-theme .practice-category__title {
+            color: var(--color-dark-text);
+        }
+
+        /* Стили для аккордеона FAQ */
+        .faq-section {
+            margin-top: var(--spacing-xl);
+        }
+
+        .faq-item {
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            text-align: left;
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--color-dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition-normal);
+        }
+
+        body.dark-theme .faq-question {
+            background: var(--color-dark-surface);
+            border-color: var(--color-dark-light);
+            color: var(--color-dark-text);
+        }
+
+        .faq-question:hover {
+            background: var(--color-light);
+        }
+
+        body.dark-theme .faq-question:hover {
+            background: var(--color-dark-light);
+        }
+
+        .faq-question[aria-expanded="true"] {
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+        }
+
+        .faq-answer {
+            padding: 0;
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-top: none;
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-normal), padding var(--transition-normal);
+        }
+
+        body.dark-theme .faq-answer {
+            background: var(--color-dark-surface);
+            border-color: var(--color-dark-light);
+        }
+
+        .faq-question[aria-expanded="true"] + .faq-answer {
+            padding: var(--spacing-lg);
+            max-height: 500px;
+        }
+
+        .faq-toggle {
+            transition: transform var(--transition-normal);
+        }
+
+        .faq-question[aria-expanded="true"] .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .practices-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .practice-tabs {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .tab-btn {
+                text-align: center;
+            }
+            
+            .practice-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .practice-card__footer {
+                flex-direction: column;
+            }
+            
+            .practice-card__button {
+                width: 100%;
+            }
+        }
+
+        /* Стили для кнопок состояний */
+        .practice-card__button[data-state="started"] {
+            background: var(--color-warning);
+        }
+
+        .practice-card__button[data-state="completed"] {
+            background: var(--color-success);
+        }
+
+        .practice-card__button[data-state="locked"] {
+            background: var(--color-text-light);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Индикатор активности */
+        .practice-card--active {
+            border: 2px solid var(--color-primary);
+        }
+
+        .practice-card--active .practice-card__header {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+        }
+
+        /* Анимация для иконок */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .practice-card:hover .practice-card__icon {
+            animation: bounce 0.5s ease;
+        }
+    </style>
 </head>
 <body>
-    <div class="page-container">
-        <div class="header">Хэдер</div>
-        <div class="nav">
-            <ul class="nav-list">
-                <li class="nav-item"><a class="nav-link" href="../index.html">Главная</a></li>
-                <li class="nav-item"><a class="nav-link" href="news.html">Новости</a></li>
-                <li class="nav-item"><a class="nav-link" href="practices.html">Практики</a></li>
-                <li class="nav-item"><a class="nav-link" href="goods.html">Товары</a></li>
-                <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li>
+    <div class="page">
+        <header class="header">
+            <button class="header__theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                🌓
+            </button>
+            <h1 class="header__title">Практические навыки</h1>
+        </header>
+        
+        <nav class="nav">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a class="nav__link" href="../index.html">Главная</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="news.html">Новости</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link nav__link--active" href="practices.html">Практики</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="goods.html">Товары</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="contacts.html">Контакты</a>
+                </li>
             </ul>
-        </div>
-        <div class="content">
-            <h2 class="section-title">Практические занятия</h2>
-            <div class="experience-card">
-                <h3 class="experience-title">Практика 1: Основы HTML</h3>
-                <p class="experience-desc">Изучение базовых тегов и структуры HTML-документа.</p>
+        </nav>
+
+        <main class="main">
+            <section class="section fade-in">
+                <h2 class="section-title">Освойте современные технологии</h2>
+                
+                <div class="practice-tabs">
+                    <button class="tab-btn tab-btn--active" data-category="all">Все практики</button>
+                    <button class="tab-btn" data-category="frontend">Frontend</button>
+                    <button class="tab-btn" data-category="backend">Backend</button>
+                    <button class="tab-btn" data-category="tools">Инструменты</button>
+                    <button class="tab-btn" data-category="devops">DevOps</button>
+                </div>
+
+                <!-- Статистика прогресса -->
+                <div class="practice-stats">
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="completedPractices">0</div>
+                        <div class="stat-card__label">Завершено практик</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="hoursSpent">0</div>
+                        <div class="stat-card__label">Часов обучения</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="skillsLearned">0</div>
+                        <div class="stat-card__label">Освоено навыков</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="currentStreak">0</div>
+                        <div class="stat-card__label">Дней подряд</div>
+                    </div>
+                </div>
+
+                <!-- Категория: Frontend -->
+                <section class="practice-category">
+                    <h3 class="practice-category__title">Frontend разработка</h3>
+                    <div class="practices-grid">
+                        <!-- Практика 1 -->
+                        <article class="card practice-card" data-category="frontend" data-id="1" data-state="available">
+                            <div class="practice-card__header">
+                                <span class="practice-card__level practice-card__level--beginner">Начальный</span>
+                                <div class="practice-card__icon">🌐</div>
+                                <h4 class="practice-card__title">Основы HTML5</h4>
+                                <p class="practice-card__description">Изучение семантической верстки и современных возможностей HTML5</p>
+                            </div>
+                            <div class="practice-card__body">
+                                <ul class="practice-card__features">
+                                    <li class="practice-card__feature">Семантические теги и структура</li>
+                                    <li class="practice-card__feature">Формы и валидация</li>
+                                    <li class="practice-card__feature">Доступность (a11y)</li>
+                                    <li class="practice-card__feature">Мета-теги и SEO оптимизация</li>
+                                </ul>
+                                <div class="practice-card__progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-bar__fill" style="width: 0%" data-progress="0"></div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span>Прогресс</span>
+                                        <span class="progress-percent">0%</span>
+                                    </div>
+                                </div>
+                                <div class="practice-card__meta">
+                                    <div class="practice-card__duration">
+                                        <span>⏱️</span>
+                                        <span>2 недели</span>
+                                    </div>
+                                    <div class="practice-card__badges">
+                                        <span style="background: var(--color-light); color: var(--color-text); padding: 2px 8px; border-radius: 12px; font-size: var(--font-size-xs);">
+                                            10 заданий
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="practice-card__footer">
+                                <button class="button button--primary practice-card__button" 
+                                        data-state="start" 
+                                        onclick="startPractice(1)">
+                                    Начать обучение
+                                </button>
+                                <button class="button button--secondary practice-card__button" onclick="openPracticeDetails(1)">
+                                    Подробнее
+                                </button>
+                            </div>
+                        </article>
+
+                        <!-- Практика 2 -->
+                        <article class="card practice-card" data-category="frontend" data-id="2" data-state="available">
+                            <div class="practice-card__header">
+                                <span class="practice-card__level practice-card__level--intermediate">Средний</span>
+                                <div class="practice-card__icon">🎨</div>
+                                <h4 class="practice-card__title">Продвинутый CSS3</h4>
+                                <p class="practice-card__description">Современные техники стилизации: Grid, Flexbox, анимации</p>
+                            </div>
+                            <div class="practice-card__body">
+                                <ul class="practice-card__features">
+                                    <li class="practice-card__feature">CSS Grid Layout</li>
+                                    <li class="practice-card__feature">Flexbox выравнивание</li>
+                                    <li class="practice-card__feature">CSS анимации и переходы</li>
+                                    <li class="practice-card__feature">CSS переменные (Custom Properties)</li>
+                                </ul>
+                                <div class="practice-card__progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-bar__fill" style="width: 0%" data-progress="0"></div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span>Прогресс</span>
+                                        <span class="progress-percent">0%</span>
+                                    </div>
+                                </div>
+                                <div class="practice-card__meta">
+                                    <div class="practice-card__duration">
+                                        <span>⏱️</span>
+                                        <span>3 недели</span>
+                                    </div>
+                                    <div class="practice-card__badges">
+                                        <span style="background: var(--color-light); color: var(--color-text); padding: 2px 8px; border-radius: 12px; font-size: var(--font-size-xs);">
+                                            15 заданий
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="practice-card__footer">
+                                <button class="button button--primary practice-card__button" 
+                                        data-state="start" 
+                                        onclick="startPractice(2)">
+                                    Начать обучение
+                                </button>
+                                <button class="button button--secondary practice-card__button" onclick="openPracticeDetails(2)">
+                                    Подробнее
+                                </button>
+                            </div>
+                        </article>
+
+                        <!-- Практика 3 -->
+                        <article class="card practice-card practice-card--active" data-category="frontend" data-id="3" data-state="in-progress">
+                            <div class="practice-card__header">
+                                <span class="practice-card__level practice-card__level--intermediate">Средний</span>
+                                <div class="practice-card__icon">⚡</div>
+                                <h4 class="practice-card__title">JavaScript ES6+</h4>
+                                <p class="practice-card__description">Современный JavaScript: от основ до продвинутых концепций</p>
+                            </div>
+                            <div class="practice-card__body">
+                                <ul class="practice-card__features">
+                                    <li class="practice-card__feature">Стрелочные функции и this</li>
+                                    <li class="practice-card__feature">Деструктуризация и спред операторы</li>
+                                    <li class="practice-card__feature">Async/Await и Promise</li>
+                                    <li class="practice-card__feature">Модули ES6 и import/export</li>
+                                </ul>
+                                <div class="practice-card__progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-bar__fill" style="width: 45%" data-progress="45"></div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span>Прогресс</span>
+                                        <span class="progress-percent">45%</span>
+                                    </div>
+                                </div>
+                                <div class="practice-card__meta">
+                                    <div class="practice-card__duration">
+                                        <span>⏱️</span>
+                                        <span>4 недели</span>
+                                    </div>
+                                    <div class="practice-card__badges">
+                                        <span style="background: var(--color-primary); color: white; padding: 2px 8px; border-radius: 12px; font-size: var(--font-size-xs);">
+                                            Активно
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="practice-card__footer">
+                                <button class="button button--warning practice-card__button" 
+                                        data-state="continue" 
+                                        onclick="continuePractice(3)">
+                                    Продолжить
+                                </button>
+                                <button class="button button--secondary practice-card__button" onclick="openPracticeDetails(3)">
+                                    Подробнее
+                                </button>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Категория: Backend -->
+                <section class="practice-category">
+                    <h3 class="practice-category__title">Backend разработка</h3>
+                    <div class="practices-grid">
+                        <!-- Практика 4 -->
+                        <article class="card practice-card" data-category="backend" data-id="4" data-state="available">
+                            <div class="practice-card__header">
+                                <span class="practice-card__level practice-card__level--beginner">Начальный</span>
+                                <div class="practice-card__icon">🖥️</div>
+                                <h4 class="practice-card__title">Node.js основы</h4>
+                                <p class="practice-card__description">Основы серверной разработки на Node.js</p>
+                            </div>
+                            <div class="practice-card__body">
+                                <ul class="practice-card__features">
+                                    <li class="practice-card__feature">Асинхронное программирование</li>
+                                    <li class="practice-card__feature">Работа с файловой системой</li>
+                                    <li class="practice-card__feature">Создание HTTP сервера</li>
+                                    <li class="practice-card__feature">NPM и управление пакетами</li>
+                                </ul>
+                                <div class="practice-card__progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-bar__fill" style="width: 0%" data-progress="0"></div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span>Прогресс</span>
+                                        <span class="progress-percent">0%</span>
+                                    </div>
+                                </div>
+                                <div class="practice-card__meta">
+                                    <div class="practice-card__duration">
+                                        <span>⏱️</span>
+                                        <span>3 недели</span>
+                                    </div>
+                                    <div class="practice-card__badges">
+                                        <span style="background: var(--color-light); color: var(--color-text); padding: 2px 8px; border-radius: 12px; font-size: var(--font-size-xs);">
+                                            12 заданий
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="practice-card__footer">
+                                <button class="button button--primary practice-card__button" 
+                                        data-state="start" 
+                                        onclick="startPractice(4)">
+                                    Начать обучение
+                                </button>
+                                <button class="button button--secondary practice-card__button" onclick="openPracticeDetails(4)">
+                                    Подробнее
+                                </button>
+                            </div>
+                        </article>
+
+                        <!-- Практика 5 -->
+                        <article class="card practice-card" data-category="backend" data-id="5" data-state="locked">
+                            <div class="practice-card__header">
+                                <span class="practice-card__level practice-card__level--advanced">Продвинутый</span>
+                                <div class="practice-card__icon">🔐</div>
+                                <h4 class="practice-card__title">Базы данных и REST API</h4>
+                                <p class="practice-card__description">Работа с MongoDB и создание RESTful API</p>
+                            </div>
+                            <div class="practice-card__body">
+                                <ul class="practice-card__features">
+                                    <li class="practice-card__feature">MongoDB и Mongoose ODM</li>
+                                    <li class="practice-card__feature">Проектирование REST API</li>
+                                    <li class="practice-card__feature">Аутентификация и авторизация</li>
+                                    <li class="practice-card__feature">Валидация данных</li>
+                                </ul>
+                                <div class="practice-card__progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-bar__fill" style="width: 0%" data-progress="0"></div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span>Прогресс</span>
+                                        <span class="progress-percent">0%</span>
+                                    </div>
+                                </div>
+                                <div class="practice-card__meta">
+                                    <div class="practice-card__duration">
+                                        <span>⏱️</span>
+                                        <span>5 недель</span>
+                                    </div>
+                                    <div class="practice-card__badges">
+                                        <span style="background: var(--color-danger); color: white; padding: 2px 8px; border-radius: 12px; font-size: var(--font-size-xs);">
+                                            Требуется пререквизит
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="practice-card__footer">
+                                <button class="button button--primary practice-card__button" 
+                                        data-state="locked" 
+                                        disabled
+                                        onclick="showPrerequisite(5)">
+                                    Доступ после HTML/CSS
+                                </button>
+                                <button class="button button--secondary practice-card__button" onclick="openPracticeDetails(5)">
+                                    Подробнее
+                                </button>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- FAQ секция -->
+                <section class="faq-section fade-in">
+                    <h3 class="section-title">Часто задаваемые вопросы</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <button class="faq-question" aria-expanded="false">
+                                Как начать обучение?
+                                <span class="faq-toggle">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Начните с выбора практики подходящего уровня сложности (отмечено цветным бейджем). Нажмите кнопку "Начать обучение" и следуйте пошаговым инструкциям. Каждая практика состоит из теории и практических заданий.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" aria-expanded="false">
+                                Сколько времени занимает одна практика?
+                                <span class="faq-toggle">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Время зависит от сложности практики. Обычно практики занимают от 2 до 5 недель при занятиях 5-10 часов в неделю. Вы можете заниматься в своем темпе, прогресс сохраняется автоматически.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" aria-expanded="false">
+                                Нужны ли специальные программы?
+                                <span class="faq-toggle">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Для большинства практик достаточно браузера и текстового редактора (например, VS Code). Для некоторых продвинутых практик могут потребоваться дополнительные инструменты, о которых мы предупреждаем заранее.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" aria-expanded="false">
+                                Как отслеживать прогресс?
+                                <span class="faq-toggle">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Ваш прогресс отображается на прогресс-баре каждой практики. Также вы можете видеть общую статистику вверху страницы. Все данные сохраняются в вашем браузере.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title">Практические навыки</h3>
+                    <p class="footer__text">Систематическое обучение современным технологиям через практику.</p>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title">Направления</h3>
+                    <nav class="footer__nav">
+                        <a href="#" class="footer__link" onclick="filterPractices('frontend')">Frontend</a>
+                        <a href="#" class="footer__link" onclick="filterPractices('backend')">Backend</a>
+                        <a href="#" class="footer__link" onclick="filterPractices('tools')">Инструменты</a>
+                        <a href="#" class="footer__link" onclick="filterPractices('devops')">DevOps</a>
+                    </nav>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title">Поддержка</h3>
+                    <p class="footer__text">Помощь в освоении материалов и решении практических задач.</p>
+                </div>
             </div>
-            <div class="experience-card">
-                <h3 class="experience-title">Практика 2: Стилизация CSS</h3>
-                <p class="experience-desc">Работа с каскадными таблицами стилей и оформление веб-страниц.</p>
+            <div class="footer__bottom">
+                <p class="footer__copyright">&copy; 2024 Digital Портфолио. Обучение через практику.</p>
             </div>
-            <div class="experience-card">
-                <h3 class="experience-title">Практика 3: Адаптивный дизайн</h3>
-                <p class="experience-desc">Создание сайтов, которые корректно отображаются на разных устройствах.</p>
-            </div>
-        </div>
-        <div class="footer">Футер</div>
+        </footer>
     </div>
+
+    <!-- Модальное окно для деталей практики -->
+    <dialog class="dialog" id="practiceDialog" style="max-width: 600px;">
+        <div class="dialog__header">
+            <h2 class="dialog__title" id="practiceModalTitle"></h2>
+        </div>
+        <div class="dialog__body">
+            <div style="display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                <div id="practiceModalIcon" style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: white; flex-shrink: 0;"></div>
+                <div style="flex: 1;">
+                    <div style="display: flex; gap: var(--spacing-sm); margin-bottom: var(--spacing-xs);">
+                        <span id="practiceModalLevel" style="padding: 4px 12px; border-radius: var(--radius-sm); font-size: var(--font-size-xs); font-weight: 700; color: white;"></span>
+                        <span style="background: var(--color-light); color: var(--color-text); padding: 4px 12px; border-radius: 12px; font-size: var(--font-size-xs);">
+                            <span id="practiceModalDuration"></span>
+                        </span>
+                    </div>
+                    <div id="practiceModalDescription" style="color: var(--color-text-light); line-height: 1.6;"></div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: var(--spacing-lg);">
+                <h4 style="margin-bottom: var(--spacing-sm); color: var(--color-dark);">Что вы изучите:</h4>
+                <ul id="practiceModalFeatures" style="padding-left: 20px; color: var(--color-text); line-height: 1.8;"></ul>
+            </div>
+            
+            <div id="practiceModalPrerequisites" style="display: none; margin-bottom: var(--spacing-lg); padding: var(--spacing-md); background: var(--color-light); border-radius: var(--radius-md);">
+                <h4 style="margin-bottom: var(--spacing-sm); color: var(--color-dark);">Требования:</h4>
+                <p id="prerequisitesText" style="color: var(--color-text); margin: 0;"></p>
+            </div>
+            
+            <div style="background: var(--color-light); padding: var(--spacing-md); border-radius: var(--radius-md);">
+                <h4 style="margin-bottom: var(--spacing-sm); color: var(--color-dark);">Ваш прогресс</h4>
+                <div class="progress-bar">
+                    <div class="progress-bar__fill" id="modalProgressBar"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Прогресс</span>
+                    <span id="modalProgressPercent">0%</span>
+                </div>
+            </div>
+        </div>
+        <div class="dialog__footer">
+            <button class="button button--secondary" onclick="closePracticeModal()">Закрыть</button>
+            <button class="button button--primary" id="practiceModalActionBtn" onclick="modalAction()">
+                Начать обучение
+            </button>
+        </div>
+    </dialog>
+
+    <!-- Модальное окно для практического задания -->
+    <dialog class="dialog" id="taskDialog" style="max-width: 800px;">
+        <div class="dialog__header">
+            <h2 class="dialog__title" id="taskModalTitle">Практическое задание</h2>
+        </div>
+        <div class="dialog__body">
+            <div id="taskContent" style="line-height: 1.8;">
+                <!-- Контент задания будет добавляться через JavaScript -->
+            </div>
+            
+            <div id="taskCodeEditor" style="margin-top: var(--spacing-lg); display: none;">
+                <h4 style="margin-bottom: var(--spacing-sm); color: var(--color-dark);">Редактор кода:</h4>
+                <textarea id="codeInput" style="width: 100%; height: 200px; padding: var(--spacing-md); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-family: 'Courier New', monospace; font-size: 14px; resize: vertical;" placeholder="Введите ваш код здесь..."></textarea>
+            </div>
+            
+            <div id="taskAnswer" style="margin-top: var(--spacing-lg); display: none;">
+                <h4 style="margin-bottom: var(--spacing-sm); color: var(--color-dark);">Ваш ответ:</h4>
+                <div id="answerOutput" style="padding: var(--spacing-md); background: var(--color-light); border-radius: var(--radius-md); font-family: 'Courier New', monospace; min-height: 100px;"></div>
+            </div>
+            
+            <div id="taskResult" style="margin-top: var(--spacing-lg); padding: var(--spacing-md); border-radius: var(--radius-md); display: none;"></div>
+        </div>
+        <div class="dialog__footer">
+            <button class="button button--secondary" onclick="closeTaskModal()">Назад</button>
+            <button class="button button--primary" id="taskCheckBtn" onclick="checkTask()">Проверить</button>
+            <button class="button" id="taskNextBtn" onclick="nextTask()" style="display: none;">Следующее задание →</button>
+        </div>
+    </dialog>
+
+    <script>
+        // Данные практик
+        const practicesData = {
+            1: {
+                title: "Основы HTML5",
+                icon: "🌐",
+                level: "beginner",
+                levelText: "Начальный",
+                duration: "2 недели",
+                description: "Изучение семантической верстки и современных возможностей HTML5",
+                features: [
+                    "Семантические теги и структура документа",
+                    "Формы и валидация ввода",
+                    "Доступность (a11y) и ARIA атрибуты",
+                    "Мета-теги и SEO оптимизация",
+                    "Мультимедиа элементы",
+                    "Графика и SVG"
+                ],
+                prerequisites: null,
+                tasks: 10,
+                progress: 0
+            },
+            2: {
+                title: "Продвинутый CSS3",
+                icon: "🎨",
+                level: "intermediate",
+                levelText: "Средний",
+                duration: "3 недели",
+                description: "Современные техники стилизации: Grid, Flexbox, анимации",
+                features: [
+                    "CSS Grid Layout и создание сложных макетов",
+                    "Flexbox для выравнивания и распределения",
+                    "CSS анимации и переходы",
+                    "CSS переменные (Custom Properties)",
+                    "Псевдоклассы и псевдоэлементы",
+                    "Медиа-запросы и адаптивный дизайн"
+                ],
+                prerequisites: "Основы HTML5",
+                tasks: 15,
+                progress: 0
+            },
+            3: {
+                title: "JavaScript ES6+",
+                icon: "⚡",
+                level: "intermediate",
+                levelText: "Средний",
+                duration: "4 недели",
+                description: "Современный JavaScript: от основ до продвинутых концепций",
+                features: [
+                    "Стрелочные функции и контекст this",
+                    "Деструктуризация и spread/rest операторы",
+                    "Async/Await и работа с Promise",
+                    "Модули ES6 и import/export",
+                    "Классы и наследование",
+                    "Итераторы и генераторы"
+                ],
+                prerequisites: "Основы программирования",
+                tasks: 20,
+                progress: 45
+            },
+            4: {
+                title: "Node.js основы",
+                icon: "🖥️",
+                level: "beginner",
+                levelText: "Начальный",
+                duration: "3 недели",
+                description: "Основы серверной разработки на Node.js",
+                features: [
+                    "Асинхронное программирование в Node.js",
+                    "Работа с файловой системой",
+                    "Создание HTTP сервера",
+                    "NPM и управление пакетами",
+                    "Обработка ошибок и отладка",
+                    "Работа с потоками"
+                ],
+                prerequisites: "JavaScript ES6+",
+                tasks: 12,
+                progress: 0
+            },
+            5: {
+                title: "Базы данных и REST API",
+                icon: "🔐",
+                level: "advanced",
+                levelText: "Продвинутый",
+                duration: "5 недели",
+                description: "Работа с MongoDB и создание RESTful API",
+                features: [
+                    "MongoDB и Mongoose ODM",
+                    "Проектирование REST API",
+                    "Аутентификация и авторизация",
+                    "Валидация данных",
+                    "Пагинация и фильтрация",
+                    "Деплоймент и мониторинг"
+                ],
+                prerequisites: "Node.js основы",
+                tasks: 18,
+                progress: 0
+            }
+        };
+
+        // Состояние практик пользователя
+        let userProgress = JSON.parse(localStorage.getItem('practice_progress')) || {};
+        let currentPracticeId = null;
+        let currentTask = 0;
+
+        // Переключение темы
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.textContent = isDark ? '☀️' : '🌓';
+        });
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Активация навигации
+            const navLinks = document.querySelectorAll('.nav__link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === 'practices.html') {
+                    link.classList.add('nav__link--active');
+                }
+            });
+
+            // Загрузка прогресса
+            loadProgress();
+            
+            // Фильтрация практик
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const practiceCards = document.querySelectorAll('.practice-card');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Убираем активный класс у всех кнопок
+                    tabBtns.forEach(b => b.classList.remove('tab-btn--active'));
+                    // Добавляем активный класс текущей кнопке
+                    this.classList.add('tab-btn--active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // Показываем/скрываем практики
+                    practiceCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 100);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // Инициализация FAQ аккордеона
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const isExpanded = question.getAttribute('aria-expanded') === 'true';
+                    question.setAttribute('aria-expanded', !isExpanded);
+                });
+            });
+
+            // Анимация появления
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((element, index) => {
+                element.style.animationDelay = `${index * 0.15}s`;
+            });
+        });
+
+        // Загрузка прогресса
+        function loadProgress() {
+            // Инициализируем прогресс для каждой практики
+            Object.keys(practicesData).forEach(id => {
+                if (!userProgress[id]) {
+                    userProgress[id] = {
+                        progress: practicesData[id].progress,
+                        started: false,
+                        completed: false,
+                        currentTask: 0,
+                        lastActive: null
+                    };
+                }
+                
+                // Обновляем отображение прогресса
+                updatePracticeCard(id);
+            });
+            
+            // Сохраняем прогресс
+            saveProgress();
+            
+            // Обновляем статистику
+            updateStats();
+        }
+
+        // Обновление карточки практики
+        function updatePracticeCard(practiceId) {
+            const card = document.querySelector(`.practice-card[data-id="${practiceId}"]`);
+            if (!card) return;
+            
+            const progress = userProgress[practiceId].progress;
+            const progressFill = card.querySelector('.progress-bar__fill');
+            const progressPercent = card.querySelector('.progress-percent');
+            const button = card.querySelector('.practice-card__button');
+            
+            // Обновляем прогресс бар
+            if (progressFill) {
+                progressFill.style.width = `${progress}%`;
+                progressFill.setAttribute('data-progress', progress);
+            }
+            
+            if (progressPercent) {
+                progressPercent.textContent = `${progress}%`;
+            }
+            
+            // Обновляем состояние кнопки
+            if (button) {
+                if (userProgress[practiceId].completed) {
+                    button.textContent = 'Завершено ✓';
+                    button.setAttribute('data-state', 'completed');
+                    button.classList.remove('button--primary');
+                    button.classList.add('button--success');
+                    button.disabled = true;
+                    card.classList.remove('practice-card--active');
+                } else if (userProgress[practiceId].started) {
+                    button.textContent = 'Продолжить →';
+                    button.setAttribute('data-state', 'in-progress');
+                    button.classList.remove('button--primary');
+                    button.classList.add('button--warning');
+                    card.classList.add('practice-card--active');
+                } else {
+                    // Проверяем пререквизиты
+                    const practice = practicesData[practiceId];
+                    if (practice.prerequisites) {
+                        const prereqId = Object.keys(practicesData).find(id => 
+                            practicesData[id].title === practice.prerequisites
+                        );
+                        
+                        if (prereqId && !userProgress[prereqId]?.completed) {
+                            button.textContent = `Требуется: ${practice.prerequisites}`;
+                            button.setAttribute('data-state', 'locked');
+                            button.disabled = true;
+                            button.classList.remove('button--primary');
+                            card.setAttribute('data-state', 'locked');
+                            return;
+                        }
+                    }
+                    
+                    button.textContent = 'Начать обучение';
+                    button.setAttribute('data-state', 'available');
+                    button.classList.add('button--primary');
+                    button.classList.remove('button--warning', 'button--success');
+                    button.disabled = false;
+                    card.classList.remove('practice-card--active');
+                }
+            }
+        }
+
+        // Сохранение прогресса
+        function saveProgress() {
+            localStorage.setItem('practice_progress', JSON.stringify(userProgress));
+            updateStats();
+        }
+
+        // Обновление статистики
+        function updateStats() {
+            const completed = Object.values(userProgress).filter(p => p.completed).length;
+            const totalHours = completed * 20; // Предполагаем 20 часов на практику
+            const skillsLearned = completed * 5; // Предполагаем 5 навыков на практику
+            
+            // Простая логика для стрика (в реальном приложении была бы сложнее)
+            let streak = 0;
+            const today = new Date().toDateString();
+            const lastActive = localStorage.getItem('last_practice_date');
+            
+            if (lastActive === today) {
+                streak = parseInt(localStorage.getItem('practice_streak') || '0');
+            } else if (lastActive) {
+                const lastDate = new Date(lastActive);
+                const todayDate = new Date();
+                const diffTime = Math.abs(todayDate - lastDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (diffDays === 1) {
+                    streak = parseInt(localStorage.getItem('practice_streak') || '0') + 1;
+                } else {
+                    streak = 1;
+                }
+            } else {
+                streak = 1;
+            }
+            
+            localStorage.setItem('last_practice_date', today);
+            localStorage.setItem('practice_streak', streak.toString());
+            
+            document.getElementById('completedPractices').textContent = completed;
+            document.getElementById('hoursSpent').textContent = totalHours;
+            document.getElementById('skillsLearned').textContent = skillsLearned;
+            document.getElementById('currentStreak').textContent = streak;
+        }
+
+        // Функции для модальных окон
+        function openPracticeDetails(practiceId) {
+            const practice = practicesData[practiceId];
+            if (!practice) return;
+            
+            document.getElementById('practiceModalTitle').textContent = practice.title;
+            document.getElementById('practiceModalIcon').textContent = practice.icon;
+            document.getElementById('practiceModalLevel').textContent = practice.levelText;
+            document.getElementById('practiceModalLevel').className = `practice-card__level practice-card__level--${practice.level}`;
+            document.getElementById('practiceModalDuration').textContent = practice.duration;
+            document.getElementById('practiceModalDescription').textContent = practice.description;
+            
+            // Особенности
+            const featuresList = document.getElementById('practiceModalFeatures');
+            featuresList.innerHTML = '';
+            practice.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                li.style.marginBottom = '8px';
+                featuresList.appendChild(li);
+            });
+            
+            // Пререквизиты
+            const prereqSection = document.getElementById('practiceModalPrerequisites');
+            if (practice.prerequisites) {
+                prereqSection.style.display = 'block';
+                document.getElementById('prerequisitesText').textContent = 
+                    `Для начала этой практики необходимо завершить: ${practice.prerequisites}`;
+            } else {
+                prereqSection.style.display = 'none';
+            }
+            
+            // Прогресс
+            const progress = userProgress[practiceId]?.progress || 0;
+            document.getElementById('modalProgressBar').style.width = `${progress}%`;
+            document.getElementById('modalProgressPercent').textContent = `${progress}%`;
+            
+            // Кнопка действия
+            const actionBtn = document.getElementById('practiceModalActionBtn');
+            if (userProgress[practiceId]?.completed) {
+                actionBtn.textContent = 'Завершено ✓';
+                actionBtn.disabled = true;
+                actionBtn.classList.remove('button--primary');
+                actionBtn.classList.add('button--success');
+            } else if (userProgress[practiceId]?.started) {
+                actionBtn.textContent = 'Продолжить обучение';
+                actionBtn.onclick = function() { startPractice(practiceId); };
+            } else {
+                actionBtn.textContent = 'Начать обучение';
+                actionBtn.onclick = function() { startPractice(practiceId); };
+                actionBtn.disabled = false;
+                actionBtn.classList.add('button--primary');
+                actionBtn.classList.remove('button--success');
+                
+                // Проверяем пререквизиты
+                if (practice.prerequisites) {
+                    const prereqId = Object.keys(practicesData).find(id => 
+                        practicesData[id].title === practice.prerequisites
+                    );
+                    
+                    if (prereqId && !userProgress[prereqId]?.completed) {
+                        actionBtn.textContent = 'Требуется пререквизит';
+                        actionBtn.disabled = true;
+                    }
+                }
+            }
+            
+            currentPracticeId = practiceId;
+            document.getElementById('practiceDialog').showModal();
+        }
+
+        function closePracticeModal() {
+            document.getElementById('practiceDialog').close();
+            currentPracticeId = null;
+        }
+
+        function modalAction() {
+            if (currentPracticeId) {
+                startPractice(currentPracticeId);
+                closePracticeModal();
+            }
+        }
+
+        // Начать практику
+        function startPractice(practiceId) {
+            const practice = practicesData[practiceId];
+            if (!practice) return;
+            
+            // Проверяем пререквизиты
+            if (practice.prerequisites) {
+                const prereqId = Object.keys(practicesData).find(id => 
+                    practicesData[id].title === practice.prerequisites
+                );
+                
+                if (prereqId && !userProgress[prereqId]?.completed) {
+                    alert(`Для начала этой практики необходимо завершить: ${practice.prerequisites}`);
+                    return;
+                }
+            }
+            
+            // Обновляем состояние
+            if (!userProgress[practiceId]) {
+                userProgress[practiceId] = {
+                    progress: 0,
+                    started: true,
+                    completed: false,
+                    currentTask: 0,
+                    lastActive: new Date().toISOString()
+                };
+            } else {
+                userProgress[practiceId].started = true;
+                userProgress[practiceId].lastActive = new Date().toISOString();
+            }
+            
+            saveProgress();
+            updatePracticeCard(practiceId);
+            
+            // Показываем первое задание
+            currentPracticeId = practiceId;
+            currentTask = userProgress[practiceId].currentTask || 0;
+            showTask(currentPracticeId, currentTask);
+        }
+
+        // Продолжить практику
+        function continuePractice(practiceId) {
+            currentPracticeId = practiceId;
+            currentTask = userProgress[practiceId].currentTask || 0;
+            showTask(currentPracticeId, currentTask);
+        }
+
+        // Показать пререквизит
+        function showPrerequisite(practiceId) {
+            const practice = practicesData[practiceId];
+            if (practice && practice.prerequisites) {
+                alert(`Для начала практики "${practice.title}" необходимо завершить: ${practice.prerequisites}`);
+            }
+        }
+
+        // Показать задание
+        function showTask(practiceId, taskNumber) {
+            const practice = practicesData[practiceId];
+            if (!practice) return;
+            
+            document.getElementById('taskModalTitle').textContent = `${practice.title} - Задание ${taskNumber + 1}`;
+            
+            // Генерируем контент задания (в реальном приложении был бы из базы данных)
+            const taskContent = document.getElementById('taskContent');
+            taskContent.innerHTML = `
+                <h3 style="color: var(--color-dark); margin-bottom: var(--spacing-md);">Задание ${taskNumber + 1} из ${practice.tasks}</h3>
+                <div style="background: var(--color-light); padding: var(--spacing-md); border-radius: var(--radius-md); margin-bottom: var(--spacing-md);">
+                    <p style="margin: 0; font-weight: 600;">Описание:</p>
+                    <p style="margin: var(--spacing-sm) 0 0 0;">${getTaskDescription(practiceId, taskNumber)}</p>
+                </div>
+                <div style="background: #f0f9ff; padding: var(--spacing-md); border-radius: var(--radius-md); border-left: 4px solid var(--color-accent);">
+                    <p style="margin: 0; font-weight: 600; color: var(--color-dark);">Задача:</p>
+                    <p style="margin: var(--spacing-sm) 0 0 0;">${getTaskObjective(practiceId, taskNumber)}</p>
+                </div>
+            `;
+            
+            // Показываем редактор кода для программистских заданий
+            const codeEditor = document.getElementById('taskCodeEditor');
+            const answerOutput = document.getElementById('answerOutput');
+            
+            if (practiceId == 1 || practiceId == 2 || practiceId == 3) {
+                codeEditor.style.display = 'block';
+                answerOutput.style.display = 'none';
+                document.getElementById('codeInput').value = '';
+            } else {
+                codeEditor.style.display = 'none';
+                answerOutput.style.display = 'block';
+                answerOutput.textContent = 'Для этого задания требуется практическое выполнение вне браузера.';
+            }
+            
+            // Скрываем результат предыдущего задания
+            document.getElementById('taskResult').style.display = 'none';
+            document.getElementById('taskNextBtn').style.display = 'none';
+            document.getElementById('taskCheckBtn').style.display = 'block';
+            document.getElementById('taskCheckBtn').textContent = 'Проверить';
+            
+            document.getElementById('taskDialog').showModal();
+        }
+
+        function getTaskDescription(practiceId, taskNumber) {
+            const descriptions = {
+                1: [
+                    "Создайте семантическую HTML структуру для страницы блога",
+                    "Реализуйте форму регистрации с валидацией",
+                    "Добавьте таблицу с данными используя семантические теги",
+                    "Создайте навигационное меню с доступностью",
+                    "Реализуйте галерею изображений с подписями"
+                ],
+                2: [
+                    "Создайте адаптивную сетку используя CSS Grid",
+                    "Реализуйте flexbox макет для карточек товаров",
+                    "Добавьте CSS анимации для интерактивных элементов",
+                    "Создайте темную тему используя CSS переменные",
+                    "Реализуйте responsive дизайн для мобильных устройств"
+                ],
+                3: [
+                    "Напишите функции для обработки массива данных",
+                    "Реализуйте асинхронный запрос к API",
+                    "Создайте простой таймер с использованием классов",
+                    "Напишите валидацию формы на чистом JavaScript",
+                    "Реализуйте drag and drop функциональность"
+                ]
+            };
+            
+            return descriptions[practiceId]?.[taskNumber] || "Практическое задание по теме практики";
+        }
+
+        function getTaskObjective(practiceId, taskNumber) {
+            const objectives = {
+                1: "Создайте HTML документ с правильной семантической структурой, включая header, main, section, article и footer.",
+                2: "Используя CSS Grid и Flexbox создайте адаптивный макет, который корректно отображается на всех устройствах.",
+                3: "Напишите JavaScript код для обработки пользовательского ввода и динамического обновления интерфейса."
+            };
+            
+            return objectives[practiceId] || "Выполните практическое задание согласно инструкциям.";
+        }
+
+        function closeTaskModal() {
+            document.getElementById('taskDialog').close();
+            currentTask = 0;
+        }
+
+        function checkTask() {
+            const practiceId = currentPracticeId;
+            const taskNumber = currentTask;
+            
+            // В реальном приложении здесь была бы проверка кода/ответа
+            const resultDiv = document.getElementById('taskResult');
+            resultDiv.style.display = 'block';
+            resultDiv.style.padding = 'var(--spacing-md)';
+            resultDiv.style.borderRadius = 'var(--radius-md)';
+            resultDiv.style.background = 'var(--color-success)';
+            resultDiv.style.color = 'white';
+            
+            resultDiv.innerHTML = `
+                <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                    <span style="font-size: 1.5rem;">✅</span>
+                    <div>
+                        <p style="margin: 0; font-weight: 600;">Задание выполнено успешно!</p>
+                        <p style="margin: var(--spacing-xs) 0 0 0; opacity: 0.9;">Вы получили 10 баллов за это задание.</p>
+                    </div>
+                </div>
+            `;
+            
+            // Обновляем прогресс
+            const practice = practicesData[practiceId];
+            const taskValue = 100 / practice.tasks;
+            userProgress[practiceId].progress = Math.min(100, userProgress[practiceId].progress + taskValue);
+            userProgress[practiceId].currentTask = taskNumber + 1;
+            
+            // Проверяем, завершена ли практика
+            if (userProgress[practiceId].currentTask >= practice.tasks) {
+                userProgress[practiceId].completed = true;
+                userProgress[practiceId].progress = 100;
+                
+                resultDiv.innerHTML += `
+                    <div style="margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid rgba(255,255,255,0.3);">
+                        <p style="margin: 0; font-weight: 600;">🎉 Поздравляем! Вы завершили практику "${practice.title}"!</p>
+                    </div>
+                `;
+            }
+            
+            saveProgress();
+            updatePracticeCard(practiceId);
+            
+            // Показываем кнопку следующего задания
+            document.getElementById('taskCheckBtn').style.display = 'none';
+            document.getElementById('taskNextBtn').style.display = 'block';
+        }
+
+        function nextTask() {
+            currentTask++;
+            const practice = practicesData[currentPracticeId];
+            
+            if (currentTask < practice.tasks) {
+                showTask(currentPracticeId, currentTask);
+            } else {
+                closeTaskModal();
+                alert(`Поздравляем! Вы завершили практику "${practice.title}"!`);
+            }
+        }
+
+        // Фильтрация по категориям из футера
+        function filterPractices(category) {
+            event.preventDefault();
+            const btn = document.querySelector(`[data-category="${category}"]`);
+            if (btn) btn.click();
+        }
+
+        // Закрытие модальных окон по клику на фон
+        document.getElementById('practiceDialog').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closePracticeModal();
+            }
+        });
+
+        document.getElementById('taskDialog').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeTaskModal();
+            }
+        });
+
+        // Обработка клавиши Esc
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closePracticeModal();
+                closeTaskModal();
+            }
+        });
+    </script>
 </body>
 </html>

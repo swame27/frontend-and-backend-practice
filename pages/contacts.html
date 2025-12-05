@@ -3,55 +3,901 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Контакты</title>
+    <title>Контакты | Digital Портфолио</title>
     <link rel="stylesheet" href="../style/styles.css">
     <style>
-        .contact-info {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
         }
-        .contact-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        @media (max-width: 768px) {
+            .contacts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .contact-info-card {
+            height: 100%;
+        }
+
+        .contact-info__item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .contact-info__item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-info__icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.5rem;
+            color: var(--color-white);
+        }
+
+        .contact-info__content {
+            flex: 1;
+        }
+
+        .contact-info__title {
+            font-size: var(--font-size-lg);
+            color: var(--color-dark);
+            margin: 0 0 var(--spacing-xs) 0;
+        }
+
+        body.dark-theme .contact-info__title {
+            color: var(--color-dark-text);
+        }
+
+        .contact-info__text {
+            color: var(--color-text-light);
+            line-height: 1.6;
+            margin: 0 0 var(--spacing-xs) 0;
+        }
+
+        .contact-info__link {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .contact-info__link:hover {
+            color: var(--color-secondary);
+            gap: var(--spacing-sm);
+        }
+
+        .contact-form-card {
+            height: 100%;
+        }
+
+        .business-hours {
+            background: linear-gradient(135deg, var(--color-light), var(--color-border));
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        body.dark-theme .business-hours {
+            background: linear-gradient(135deg, var(--color-dark-light), var(--color-dark));
+        }
+
+        .business-hours__title {
+            font-size: var(--font-size-lg);
+            color: var(--color-dark);
+            margin: 0 0 var(--spacing-md) 0;
+        }
+
+        body.dark-theme .business-hours__title {
+            color: var(--color-dark-text);
+        }
+
+        .hours-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        body.dark-theme .hours-item {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .hours-item:last-child {
+            border-bottom: none;
+        }
+
+        .hours-day {
+            font-weight: 600;
+        }
+
+        .hours-time {
+            color: var(--color-success);
+            font-weight: 600;
+        }
+
+        .hours-time--closed {
+            color: var(--color-danger);
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .social-link {
+            width: 44px;
+            height: 44px;
+            background: var(--color-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--color-text);
+            transition: var(--transition-normal);
+        }
+
+        body.dark-theme .social-link {
+            background: var(--color-dark-light);
+            color: var(--color-dark-text);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .social-link--telegram:hover {
+            background: #0088cc;
             color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 15px;
         }
-        .contact-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+
+        .social-link--vk:hover {
+            background: #4c75a3;
+            color: white;
+        }
+
+        .social-link--github:hover {
+            background: #333;
+            color: white;
+        }
+
+        .social-link--linkedin:hover {
+            background: #0077b5;
+            color: white;
+        }
+
+        .map-container {
+            margin-top: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            height: 400px;
+            position: relative;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--color-light), var(--color-border));
+            color: var(--color-text);
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        body.dark-theme .map-placeholder {
+            background: linear-gradient(135deg, var(--color-dark-light), var(--color-dark));
+            color: var(--color-dark-text);
+        }
+
+        .map-placeholder__icon {
+            font-size: 3rem;
+            opacity: 0.7;
+        }
+
+        .map-placeholder__text {
+            text-align: center;
+        }
+
+        .map-placeholder__address {
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .map-placeholder__subtext {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-light);
+        }
+
+        body.dark-theme .map-placeholder__subtext {
+            color: var(--color-dark-text-light);
+        }
+
+        .call-button {
+            margin-top: var(--spacing-md);
+            width: 100%;
+        }
+
+        /* Анимация для кнопки звонка */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .call-button--pulse {
+            animation: pulse 2s infinite;
         }
     </style>
 </head>
 <body>
-    <div class="page-container">
-        <div class="header">Хэдер</div>
-        <div class="nav">
-            <ul class="nav-list">
-                <li class="nav-item"><a class="nav-link" href="../index.html">Главная</a></li>
-                <li class="nav-item"><a class="nav-link" href="news.html">Новости</a></li>
-                <li class="nav-item"><a class="nav-link" href="practices.html">Практики</a></li>
-                <li class="nav-item"><a class="nav-link" href="goods.html">Товары</a></li>
-                <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li>
+    <div class="page">
+        <header class="header">
+            <button class="header__theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                🌓
+            </button>
+            <h1 class="header__title">Свяжитесь с нами</h1>
+        </header>
+        
+        <nav class="nav">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a class="nav__link" href="../index.html">Главная</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="news.html">Новости</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="practices.html">Практики</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="goods.html">Товары</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link nav__link--active" href="contacts.html">Контакты</a>
+                </li>
             </ul>
+        </nav>
+
+        <main class="main">
+            <section class="section fade-in">
+                <h2 class="section-title">Давайте создадим что-то удивительное вместе</h2>
+                
+                <div class="contacts-grid">
+                    <!-- Контактная информация -->
+                    <article class="card contact-info-card">
+                        <div class="card__header">
+                            <h3 style="margin: 0;">Контактная информация</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="contact-info__item">
+                                <div class="contact-info__icon">📧</div>
+                                <div class="contact-info__content">
+                                    <h4 class="contact-info__title">Электронная почта</h4>
+                                    <p class="contact-info__text">Основной email для связи и предложений</p>
+                                    <a href="mailto:yura.blashchenko@mail.ru" class="contact-info__link">
+                                        yura.blashchenko@mail.ru
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                            <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="contact-info__item">
+                                <div class="contact-info__icon">📱</div>
+                                <div class="contact-info__content">
+                                    <h4 class="contact-info__title">Телефон</h4>
+                                    <p class="contact-info__text">Звонки, WhatsApp и Telegram</p>
+                                    <a href="tel:+79991234567" class="contact-info__link" id="phoneLink">
+                                        +7 (999) 123-45-67
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                            <path d="M4.516 7.548c.436-.446 1.043-.481 1.576 0L10 11.295l3.908-3.747c.533-.481 1.141-.446 1.574 0 .436.445.408 1.197 0 1.615-.406.418-4.695 4.502-4.695 4.502a1.095 1.095 0 0 1-1.576 0S4.924 9.581 4.516 9.163c-.409-.418-.436-1.17 0-1.615z"/>
+                                        </svg>
+                                    </a>
+                                    <div style="margin-top: var(--spacing-sm);">
+                                        <button class="button button--primary call-button call-button--pulse" onclick="openCallModal()">
+                                            📞 Позвоните мне
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="contact-info__item">
+                                <div class="contact-info__icon">🏢</div>
+                                <div class="contact-info__content">
+                                    <h4 class="contact-info__title">Адрес офиса</h4>
+                                    <p class="contact-info__text">г. Москва, просп. Вернадского, 86, стр. 6</p>
+                                    <p class="contact-info__text" style="font-size: var(--font-size-sm); color: var(--color-text-light);">
+                                        Метро: Юго-Западная
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="contact-info__item">
+                                <div class="contact-info__icon">💬</div>
+                                <div class="contact-info__content">
+                                    <h4 class="contact-info__title">Социальные сети</h4>
+                                    <p class="contact-info__text">Следите за обновлениями в соцсетях</p>
+                                    <div class="social-links">
+                                        <a href="https://t.me/username" class="social-link social-link--telegram" title="Telegram" target="_blank">
+                                            📱
+                                        </a>
+                                        <a href="https://vk.com/username" class="social-link social-link--vk" title="VK" target="_blank">
+                                            👥
+                                        </a>
+                                        <a href="https://github.com/username" class="social-link social-link--github" title="GitHub" target="_blank">
+                                            💻
+                                        </a>
+                                        <a href="https://linkedin.com/in/username" class="social-link social-link--linkedin" title="LinkedIn" target="_blank">
+                                            💼
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="business-hours">
+                            <h4 class="business-hours__title">Часы работы</h4>
+                            <ul class="hours-list">
+                                <li class="hours-item">
+                                    <span class="hours-day">Понедельник - Пятница</span>
+                                    <span class="hours-time">9:00 - 18:00</span>
+                                </li>
+                                <li class="hours-item">
+                                    <span class="hours-day">Суббота</span>
+                                    <span class="hours-time">10:00 - 16:00</span>
+                                </li>
+                                <li class="hours-item">
+                                    <span class="hours-day">Воскресенье</span>
+                                    <span class="hours-time hours-time--closed">Выходной</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Форма обратной связи -->
+                    <article class="card contact-form-card">
+                        <div class="card__header">
+                            <h3 style="margin: 0;">Форма обратной связи</h3>
+                        </div>
+                        <div class="card__body">
+                            <form class="form" id="contactForm">
+                                <div class="form__group">
+                                    <label class="form__label form__label--required" for="name">Ваше имя</label>
+                                    <input class="form__input" type="text" id="name" name="name" required 
+                                           placeholder="Иван Иванов" autocomplete="name">
+                                </div>
+                                
+                                <div class="form__group">
+                                    <label class="form__label form__label--required" for="email">Электронная почта</label>
+                                    <input class="form__input" type="email" id="email" name="email" required 
+                                           placeholder="ivan@example.com" autocomplete="email">
+                                </div>
+                                
+                                <div class="form__group">
+                                    <label class="form__label" for="phone">Телефон</label>
+                                    <input class="form__input" type="tel" id="phone" name="phone" 
+                                           placeholder="+7 (999) 123-45-67" autocomplete="tel">
+                                </div>
+                                
+                                <div class="form__group">
+                                    <label class="form__label form__label--required" for="subject">Тема обращения</label>
+                                    <select class="form__select" id="subject" name="subject" required>
+                                        <option value="">Выберите тему</option>
+                                        <option value="collaboration">Сотрудничество</option>
+                                        <option value="project">Обсуждение проекта</option>
+                                        <option value="consultation">Консультация</option>
+                                        <option value="job">Предложение о работе</option>
+                                        <option value="other">Другое</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form__group">
+                                    <label class="form__label form__label--required" for="message">Сообщение</label>
+                                    <textarea class="form__textarea" id="message" name="message" required 
+                                              placeholder="Опишите ваш проект или задайте вопрос..." rows="4"></textarea>
+                                </div>
+
+                                <div class="form__group">
+                                    <label class="form__label">
+                                        <input type="checkbox" name="agreement" required>
+                                        Я согласен на обработку персональных данных
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card__footer">
+                            <button class="button button--primary" onclick="submitContactForm()" style="width: 100%;">
+                                Отправить сообщение
+                            </button>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Карта -->
+                <div class="map-container fade-in">
+                    <div class="map-placeholder">
+                        <div class="map-placeholder__icon">🗺️</div>
+                        <div class="map-placeholder__text">
+                            <div class="map-placeholder__address">г. Москва, просп. Вернадского, 86, стр. 6</div>
+                            <div class="map-placeholder__subtext">Метро: Юго-Западная (5 минут пешком)</div>
+                            <div class="map-placeholder__subtext">Парковка: бесплатная на территории</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title">Контакты</h3>
+                    <p class="footer__text">Всегда на связи для обсуждения ваших проектов и идей.</p>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title">Быстрые ссылки</h3>
+                    <nav class="footer__nav">
+                        <a href="mailto:yura.blashchenko@mail.ru" class="footer__link">📧 Email</a>
+                        <a href="tel:+79991234567" class="footer__link">📱 Телефон</a>
+                        <a href="#" class="footer__link" onclick="openCallModal()">📞 Позвонить</a>
+                    </nav>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title">Соцсети</h3>
+                    <p class="footer__text">Следите за обновлениями в социальных сетях.</p>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="footer__copyright">&copy; 2024 Digital Портфолио. Все контакты актуальны.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Модальное окно для звонка -->
+    <dialog class="dialog" id="callDialog" style="max-width: 400px;">
+        <div class="dialog__header">
+            <h2 class="dialog__title">Позвонить</h2>
         </div>
-        <div class="content">
-            <h2 class="section-title">Контакты</h2>
-            <div class="contact-info">
-                <p><strong>Email:</strong> yura.blashchenko@mail.ru</p>
-                <p><strong>Адрес:</strong> г. Москва, просп. Вернадского, 86, стр. 6</p>
-                <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
-                <button class="contact-button">Позвоните мне</button>
+        <div class="dialog__body">
+            <div style="text-align: center; padding: var(--spacing-lg);">
+                <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">📱</div>
+                <h3 style="margin: 0 0 var(--spacing-sm) 0; color: var(--color-dark);">+7 (999) 123-45-67</h3>
+                <p style="color: var(--color-text-light); margin-bottom: var(--spacing-lg);">
+                    Блащенко Юрий Евгеньевич
+                </p>
+                
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    <button class="button button--primary" onclick="initiateCall()">
+                        📞 Позвонить сейчас
+                    </button>
+                    <button class="button button--secondary" onclick="copyPhoneNumber()">
+                        📋 Скопировать номер
+                    </button>
+                    <button class="button" onclick="openWhatsApp()">
+                        💬 WhatsApp
+                    </button>
+                    <button class="button" onclick="openTelegram()">
+                        📱 Telegram
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="footer">Футер</div>
-    </div>
+        <div class="dialog__footer">
+            <button class="button button--secondary" onclick="closeCallModal()">Отмена</button>
+        </div>
+    </dialog>
+
+    <!-- Модальное окно успешной отправки -->
+    <dialog class="dialog" id="successDialog" style="max-width: 400px;">
+        <div class="dialog__header">
+            <h2 class="dialog__title">Успешно!</h2>
+        </div>
+        <div class="dialog__body">
+            <div style="text-align: center; padding: var(--spacing-lg);">
+                <div style="font-size: 4rem; margin-bottom: var(--spacing-md); color: var(--color-success);">✅</div>
+                <h3 style="margin: 0 0 var(--spacing-sm) 0; color: var(--color-dark);">Сообщение отправлено!</h3>
+                <p style="color: var(--color-text-light); line-height: 1.6;">
+                    Спасибо за ваше сообщение. Мы свяжемся с вами в ближайшее время для обсуждения деталей.
+                </p>
+            </div>
+        </div>
+        <div class="dialog__footer">
+            <button class="button button--primary" onclick="closeSuccessModal()">Отлично!</button>
+        </div>
+    </dialog>
+
+    <script>
+        // Переключение темы
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.textContent = isDark ? '☀️' : '🌓';
+        });
+
+        // Активация навигации
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav__link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === 'contacts.html') {
+                    link.classList.add('nav__link--active');
+                }
+            });
+
+            // Анимация появления
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((element, index) => {
+                element.style.animationDelay = `${index * 0.15}s`;
+            });
+
+            // Инициализация маски для телефона
+            const phoneInput = document.getElementById('phone');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function(e) {
+                    let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+                    e.target.value = !x[2] ? x[1] : '+7 (' + x[2] + ') ' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
+                });
+            }
+
+            // Проверяем, является ли устройство мобильным
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const phoneLink = document.getElementById('phoneLink');
+            
+            if (!isMobile) {
+                phoneLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openCallModal();
+                });
+            }
+        });
+
+        // Функции для модальных окон
+        function openCallModal() {
+            document.getElementById('callDialog').showModal();
+        }
+
+        function closeCallModal() {
+            document.getElementById('callDialog').close();
+        }
+
+        function openSuccessModal() {
+            document.getElementById('successDialog').showModal();
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successDialog').close();
+        }
+
+        // Функции для звонка и сообщений
+        function initiateCall() {
+            const phoneNumber = '+79991234567';
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                window.location.href = `tel:${phoneNumber}`;
+            } else {
+                alert(`Имитация звонка на номер: ${formatPhoneNumber(phoneNumber)}\n\nНа мобильном устройстве эта кнопка инициирует реальный звонок.`);
+                closeCallModal();
+            }
+        }
+
+        function copyPhoneNumber() {
+            const phoneNumber = '+7 (999) 123-45-67';
+            navigator.clipboard.writeText(phoneNumber).then(() => {
+                alert(`Номер телефона скопирован в буфер обмена:\n${phoneNumber}`);
+                closeCallModal();
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+                alert('Не удалось скопировать номер телефона');
+            });
+        }
+
+        function openWhatsApp() {
+            const message = 'Здравствуйте! Хотел бы связаться с вами по поводу...';
+            const phoneNumber = '79991234567';
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+            closeCallModal();
+        }
+
+        function openTelegram() {
+            const username = 'username'; // Замените на реальный username
+            window.open(`https://t.me/${username}`, '_blank');
+            closeCallModal();
+        }
+
+        function formatPhoneNumber(phone) {
+            return phone.replace(/(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/, '+$1 ($2) $3-$4-$5');
+        }
+
+        // Функция отправки формы
+        function submitContactForm() {
+            const form = document.getElementById('contactForm');
+            const formData = new FormData(form);
+            
+            // Валидация формы
+            if (!form.checkValidity()) {
+                // Показываем ошибки
+                const requiredFields = form.querySelectorAll('[required]');
+                let hasError = false;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.classList.add('form__input--error');
+                        hasError = true;
+                        
+                        // Создаем сообщение об ошибке
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'form__error';
+                        errorDiv.textContent = 'Это поле обязательно для заполнения';
+                        errorDiv.style.color = 'var(--color-danger)';
+                        errorDiv.style.fontSize = 'var(--font-size-sm)';
+                        errorDiv.style.marginTop = '4px';
+                        
+                        field.parentNode.appendChild(errorDiv);
+                        
+                        // Удаляем сообщение об ошибке при фокусе
+                        field.addEventListener('input', function() {
+                            field.classList.remove('form__input--error');
+                            if (errorDiv.parentNode) {
+                                errorDiv.parentNode.removeChild(errorDiv);
+                            }
+                        }, { once: true });
+                    }
+                });
+                
+                if (hasError) {
+                    // Прокручиваем к первой ошибке
+                    const firstError = form.querySelector('.form__input--error');
+                    if (firstError) {
+                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        firstError.focus();
+                    }
+                    return;
+                }
+            }
+            
+            // Собираем данные формы
+            const formObject = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone') || 'Не указан',
+                subject: formData.get('subject'),
+                message: formData.get('message'),
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                page: 'contacts.html'
+            };
+            
+            // Показываем индикатор загрузки
+            const submitBtn = form.querySelector('button[type="button"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Отправка...';
+            submitBtn.disabled = true;
+            
+            // Имитация отправки на сервер (в реальном проекте здесь будет fetch)
+            setTimeout(() => {
+                console.log('Данные формы:', formObject);
+                
+                // Показываем уведомление об успешной отправке
+                showNotification('Сообщение успешно отправлено!');
+                
+                // Показываем модальное окно успеха
+                openSuccessModal();
+                
+                // Сбрасываем форму
+                form.reset();
+                
+                // Возвращаем кнопку в исходное состояние
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                // Отправляем данные в аналитику (имитация)
+                sendToAnalytics(formObject);
+                
+            }, 1500);
+        }
+
+        // Функция отправки в аналитику (имитация)
+        function sendToAnalytics(data) {
+            // В реальном проекте здесь будет отправка на сервер
+            console.log('Отправка в аналитику:', {
+                event: 'contact_form_submit',
+                data: data,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Сохраняем в localStorage для истории
+            const submissions = JSON.parse(localStorage.getItem('contact_submissions') || '[]');
+            submissions.push({
+                ...data,
+                id: Date.now(),
+                status: 'submitted'
+            });
+            localStorage.setItem('contact_submissions', JSON.stringify(submissions.slice(-10))); // Храним последние 10
+        }
+
+        // Функция показа уведомления
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--color-success)' : 'var(--color-danger)'};
+                color: white;
+                padding: var(--spacing-md) var(--spacing-lg);
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow-xl);
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-sm);
+                max-width: 400px;
+            `;
+            
+            notification.innerHTML = `
+                <span style="font-size: 1.5rem;">${type === 'success' ? '✅' : '⚠️'}</span>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Удаляем уведомление через 4 секунды
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+            
+            // Добавляем стили для анимации
+            if (!document.querySelector('#notification-animations')) {
+                const style = document.createElement('style');
+                style.id = 'notification-animations';
+                style.textContent = `
+                    @keyframes slideInRight {
+                        from {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
+                    @keyframes slideOutRight {
+                        from {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                        to {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // Закрытие модальных окон по клику на фон
+        document.getElementById('callDialog').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeCallModal();
+            }
+        });
+
+        document.getElementById('successDialog').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeSuccessModal();
+            }
+        });
+
+        // Обработка клавиши Esc
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeCallModal();
+                closeSuccessModal();
+            }
+        });
+
+        // Валидация email в реальном времени
+        const emailInput = document.getElementById('email');
+        if (emailInput) {
+            emailInput.addEventListener('blur', function() {
+                const email = this.value;
+                if (email && !isValidEmail(email)) {
+                    this.classList.add('form__input--error');
+                    
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'form__error';
+                    errorDiv.textContent = 'Введите корректный email адрес';
+                    errorDiv.style.color = 'var(--color-danger)';
+                    errorDiv.style.fontSize = 'var(--font-size-sm)';
+                    errorDiv.style.marginTop = '4px';
+                    
+                    this.parentNode.appendChild(errorDiv);
+                    
+                    // Удаляем сообщение при исправлении
+                    this.addEventListener('input', function() {
+                        if (isValidEmail(this.value)) {
+                            this.classList.remove('form__input--error');
+                            if (errorDiv.parentNode) {
+                                errorDiv.parentNode.removeChild(errorDiv);
+                            }
+                        }
+                    }, { once: true });
+                }
+            });
+        }
+
+        function isValidEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        // Сохранение черновика формы
+        const form = document.getElementById('contactForm');
+        const formInputs = form.querySelectorAll('input, select, textarea');
+        
+        // Восстанавливаем данные из localStorage
+        formInputs.forEach(input => {
+            const savedValue = localStorage.getItem(`contact_form_${input.name}`);
+            if (savedValue) {
+                input.value = savedValue;
+            }
+            
+            // Сохраняем изменения в localStorage
+            input.addEventListener('input', function() {
+                localStorage.setItem(`contact_form_${this.name}`, this.value);
+            });
+        });
+        
+        // Очистка сохраненных данных при успешной отправке
+        form.addEventListener('submit', function() {
+            formInputs.forEach(input => {
+                localStorage.removeItem(`contact_form_${input.name}`);
+            });
+        });
+    </script>
 </body>
 </html>
