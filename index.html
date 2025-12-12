@@ -157,18 +157,25 @@
                                         </li>
                                     </ul>
                                 </div>
+                                <!-- В секции профиля заменить кнопки скачивания резюме на это: -->
                                 <div class="col-md-6">
-                                    <h5 class="text-primary">
+                                    <h5 class="h6 text-primary mb-3">
                                         <i class="bi bi-download me-2"></i>Резюме
                                     </h5>
                                     <div class="d-grid gap-2">
-                                        <a href="assets/resume.pdf" class="btn btn-primary" download>
+                                        <a href="assets/resume.pdf" class="btn btn-primary" 
+                                        onclick="downloadResume('pdf'); return false;" download>
                                             <i class="bi bi-file-pdf me-2"></i>Скачать PDF
                                         </a>
-                                        <a href="assets/resume.docx" class="btn btn-outline-primary" download>
+                                        <a href="assets/resume.docx" class="btn btn-outline-primary"
+                                        onclick="downloadResume('docx'); return false;" download>
                                             <i class="bi bi-file-word me-2"></i>Скачать DOCX
                                         </a>
                                     </div>
+                                    <p class="small text-muted mt-2">
+                                        <i class="bi bi-info-circle me-1"></i>
+                                        Файлы будут автоматически скачаны на ваше устройство
+                                    </p>
                                 </div>
                             </div>
                             
