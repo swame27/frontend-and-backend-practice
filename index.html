@@ -1,235 +1,116 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Портфолио - Главная</title>
-    
-    <!-- Bootstrap 5 CSS -->
+
+    <!-- Bootstrap 5.3 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    
-    <!-- Наши стили -->
-    <link rel="stylesheet" href="styles/styles.css">
-    
+
     <style>
-        /* Дополнительные стили для главной страницы */
-        .hero-section {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-            color: white;
+        :root {
+            --bs-primary: #4361ee;
+            --bs-primary-rgb: 67,97,238;
         }
-        
-        .profile-img {
-            width: 180px;
-            height: 180px;
-            object-fit: cover;
-            border: 4px solid var(--color-primary);
-        }
-        
-        /* БЭМ-классы для Bootstrap компонентов */
-        .project-card {
-            transition: transform 0.3s, box-shadow 0.3s;
-            height: 100%;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
-        }
-        
-        .skill-bar .progress-bar {
-            transition: width 1s ease-in-out;
-        }
+        .hero { background: linear-gradient(135deg, #4361ee, #3a0ca3); }
+        .profile-img { width: 180px; height: 180px; object-fit: cover; border: 5px solid white; }
+        .skill-progress { height: 10px; }
     </style>
 </head>
-<body>
-    <!-- Hero Section -->
-    <header class="hero-section py-5">
+<body class="bg-light">
+
+    <!-- Hero -->
+    <header class="hero text-white py-5">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1 class="display-5 fw-bold mb-3">Digital Портфолио</h1>
-                    <p class="lead mb-4">Студент веб-разработчик. Создаю современные и адаптивные веб-приложения</p>
-                    <div class="d-flex align-items-center gap-3">
-                        <span class="badge bg-light text-primary fs-6">ЭФБО-17-24</span>
-                        <button class="btn btn-light btn-theme" id="themeToggle">
-                            <i class="bi bi-moon"></i>
-                        </button>
-                    </div>
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold">Юрий Блащенко</h1>
+                    <p class="lead mb-4">Студент-разработчик • ЭФБО-17-24</p>
+                    <p class="fs-5 mb-4">Создаю современные, адаптивные и быстрые веб-приложения</p>
+                    <a href="resume.pdf" class="btn btn-light btn-lg" download>
+                        <i class="bi bi-download me-2"></i>Скачать резюме
+                    </a>
                 </div>
-                <div class="col-md-4 text-center">
-                    <img src="images/photo.png" alt="Фото студента" 
-                         class="rounded-circle profile-img"
-                         onerror="this.src='https://via.placeholder.com/180/ffffff/4361ee?text=Юрий'">
+                <div class="col-lg-4 text-center">
+                    <img src="images/photo.png" alt="Юрий" class="rounded-circle profile-img shadow-lg"
+                         onerror="this.src='https://via.placeholder.com/180/4361ee/ffffff?text=ЮБ'">
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Navigation -->
+    <!-- Навигация -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand d-lg-none" href="#">Меню</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav w-100 justify-content-between">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">
-                            <i class="bi bi-house me-2"></i>Главная
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/news.html">
-                            <i class="bi bi-newspaper me-2"></i>Новости
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/practices.html">
-                            <i class="bi bi-code-slash me-2"></i>Практики
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/goods.html">
-                            <i class="bi bi-cart me-2"></i>Товары
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/contacts.html">
-                            <i class="bi bi-telephone me-2"></i>Контакты
-                        </a>
-                    </li>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pages/practices.html">Практики</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pages/goods.html">Товары</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pages/contacts.html">Контакты</a></li>
                 </ul>
+                <button class="btn btn-outline-light" id="themeToggle"><i class="bi bi-moon-stars"></i></button>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content (остаётся как у вас, но добавляем БЭМ-классы) -->
-    <main class="container py-4">
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-8">
-                    <!-- Профиль -->
-                    <article class="card mb-4">
-                        <div class="card-header bg-light">
-                            <h2 class="h4 mb-0">
-                                <i class="bi bi-person-circle text-primary me-2"></i>
-                                Блащенко Юрий Евгеньевич
-                            </h2>
-                        </div>
-                        <div class="card-body">
-                            <!-- ... ваш контент ... -->
-                        </div>
-                    </article>
-                    
-                    <!-- Обо мне -->
-                    <article class="card">
-                        <div class="card-header bg-light">
-                            <h3 class="h5 mb-0">
-                                <i class="bi bi-person-lines-fill text-primary me-2"></i>
-                                Обо мне
-                            </h3>
-                        </div>
-                        <div class="card-body">
-                            <!-- ... ваш контент ... -->
-                        </div>
-                    </article>
-                </div>
-                
-                <div class="col-lg-4">
-                    <!-- Навыки -->
-                    <article class="card mb-4">
-                        <div class="card-header bg-light">
-                            <h3 class="h5 mb-0">
-                                <i class="bi bi-graph-up text-primary me-2"></i>
-                                Мои навыки
-                            </h3>
-                        </div>
-                        <div class="card-body">
-                            <!-- ... ваш контент ... -->
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Проекты -->
-        <section class="mb-5">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="h3 text-primary">
-                    <i class="bi bi-folder-fill me-2"></i>
-                    Мои проекты
-                </h2>
-                <a href="pages/practices.html" class="btn btn-outline-primary btn-sm">
-                    Все проекты <i class="bi bi-arrow-right ms-1"></i>
-                </a>
-            </div>
-            
-            <div class="row g-4">
-                <!-- Проект 1 -->
-                <div class="col-lg-4 col-md-6">
-                    <article class="card project-card h-100">
-                        <!-- ... ваш контент ... -->
-                    </article>
-                </div>
-                <!-- ... остальные проекты ... -->
-            </div>
-        </section>
-    </main>
+    <main class="container my-5">
+        <!-- О себе + Навыки -->
+        <div class="row g-5">
+            <div class="col-lg-8">
+                <section class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h2 class="h4 text-primary mb-3">Обо мне</h2>
+                        <p>Привет! Я студент ИПТИП, увлекаюсь фронтенд-разработкой. Люблю чистый код, современные фреймворки и красивый UI.</p>
+                        <p>В свободное время изучаю React, Node.js и делаю pet-проекты.</p>
+                    </div>
+                </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__content">
-                <div class="footer__section">
-                    <h3 class="footer__title">Digital Портфолио</h3>
-                    <p class="footer__text">
-                        Сайт-портфолио студента веб-разработчика. 
-                        Демонстрация проектов, навыков и учебных материалов.
-                    </p>
-                </div>
-                <div class="footer__section">
-                    <h3 class="footer__title">Быстрые ссылки</h3>
-                    <nav>
-                        <a href="index.html" class="footer__link">Главная</a>
-                        <a href="pages/projects.html" class="footer__link">Проекты</a>
-                        <a href="pages/news.html" class="footer__link">Новости</a>
-                        <a href="pages/contacts.html" class="footer__link">Контакты</a>
-                    </nav>
-                </div>
-                <div class="footer__section">
-                    <h3 class="footer__title">Контакты</h3>
-                    <p class="footer__text">
-                        <i class="bi bi-envelope me-2"></i>
-                        student@example.com
-                    </p>
-                </div>
+                <section>
+                    <h2 class="h4 text-primary mb-4">Мои навыки</h2>
+                    <div class="row g-3">
+                        <div class="col-md-6"><strong>HTML / CSS / JS</strong><div class="progress skill-progress mt-1"><div class="progress-bar bg-primary" style="width:95%"></div></div></div>
+                        <div class="col-md-6"><strong>Bootstrap 5</strong><div class="progress skill-progress mt-1"><div class="progress-bar bg-success" style="width:90%"></div></div></div>
+                        <div class="col-md-6"><strong>Git / GitHub</strong><div class="progress skill-progress mt-1"><div class="progress-bar bg-info" style="width:85%"></div></div></div>
+                        <div class="col-md-6"><strong>Figma → HTML</strong><div class="progress skill-progress mt-1"><div class="progress-bar bg-warning" style="width:80%"></div></div></div>
+                    </div>
+                </section>
             </div>
-            <div class="footer__bottom text-center pt-4 border-top">
-                <p class="footer__copyright">
-                    &copy; 2024 Digital Портфолио. Все права защищены.
-                </p>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="h5">Группа</h3>
+                        <p class="display-6 fw-bold text-primary">ЭФБО-17-24</p>
+                        <hr>
+                        <p><strong>Институт:</strong> ИПТИП<br>
+                           <strong>Курс:</strong> 1-й, 2025/2026</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
+    </main>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Наш скрипт для переключения темы -->
-    <script src="scripts/theme-toggle.js"></script>
-    
-    <!-- Дополнительные скрипты -->
     <script>
-        // Ваши существующие скрипты остаются
-        const projects = {
-            // ... ваши данные ...
-        };
-        
-        // ... ваш существующий JavaScript ...
+        // Тёмная тема
+        const toggle = document.getElementById('themeToggle');
+        const icon = toggle.querySelector('i');
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-bs-theme','dark');
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+            document.documentElement.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+            icon.classList.toggle('bi-sun', !isDark);
+            icon.classList.toggle('bi-moon-stars', isDark);
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        });
+        if (saved === 'dark') icon.classList.replace('bi-moon-stars','bi-sun');
     </script>
 </body>
 </html>

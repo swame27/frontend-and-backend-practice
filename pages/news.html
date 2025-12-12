@@ -1,1374 +1,180 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Новости | Digital Портфолио</title>
-    <link rel="stylesheet" href="../style/styles.css">
+    <title>Новости — Digital Портфолио</title>
+
+    <!-- Bootstrap 5.3 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
     <style>
-        /* Стили для новостной страницы с БЭМ методологией */
-        .news-hero {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-            color: var(--color-white);
-            padding: var(--spacing-xl) var(--spacing-lg);
-            margin: calc(var(--spacing-xl) * -1) calc(var(--spacing-lg) * -1) var(--spacing-xl);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .news-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" opacity="0.1"><path d="M0,70 Q250,30 500,70 T1000,70 V100 H0 Z" fill="white"/></svg>');
-            background-size: cover;
-        }
-
-        .news-hero__title {
-            font-size: var(--font-size-3xl);
-            margin: 0 0 var(--spacing-md) 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .news-hero__subtitle {
-            font-size: var(--font-size-lg);
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Категории новостей */
-        .news-categories {
-            display: flex;
-            gap: var(--spacing-sm);
-            justify-content: center;
-            margin-bottom: var(--spacing-xl);
-            flex-wrap: wrap;
-        }
-
-        .news-categories__button {
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border: 2px solid var(--color-border);
-            background: var(--color-white);
-            color: var(--color-text);
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-normal);
-            position: relative;
-            overflow: hidden;
-        }
-
-        body.dark-theme .news-categories__button {
-            background: var(--color-dark-surface);
-            border-color: var(--color-dark-light);
-            color: var(--color-dark-text);
-        }
-
-        .news-categories__button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .news-categories__button--active {
-            background: var(--color-primary);
-            border-color: var(--color-primary);
-            color: var(--color-white);
-        }
-
-        /* Сетка новостей */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: var(--spacing-lg);
-            margin-top: var(--spacing-xl);
-        }
-
-        @media (max-width: 768px) {
-            .news-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Карточка новости */
         .news-card {
-            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+            transition: all 0.4s ease;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .news-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .news-card__badge {
-            position: absolute;
-            top: var(--spacing-md);
-            right: var(--spacing-md);
-            padding: 6px 12px;
-            border-radius: var(--radius-sm);
-            font-size: var(--font-size-xs);
-            font-weight: 700;
-            color: var(--color-white);
-            z-index: 2;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .news-card__badge--featured {
-            background: var(--color-warning);
-        }
-
-        .news-card__badge--hot {
-            background: var(--color-danger);
-        }
-
-        .news-card__badge--exclusive {
-            background: var(--color-success);
-        }
-
-        .news-card__image-container {
-            position: relative;
-            overflow: hidden;
-            height: 200px;
-        }
-
-        .news-card__image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform var(--transition-normal);
-        }
-
-        .news-card:hover .news-card__image {
-            transform: scale(1.05);
-        }
-
-        .news-card__content {
-            padding: var(--spacing-lg);
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .news-card__meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-md);
-            font-size: var(--font-size-sm);
-        }
-
-        .news-card__date {
-            background: var(--color-primary);
-            color: var(--color-white);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: var(--font-size-xs);
-        }
-
-        .news-card__author {
-            color: var(--color-text-light);
-            font-weight: 500;
-        }
-
-        body.dark-theme .news-card__author {
-            color: var(--color-dark-text-light);
-        }
-
-        .news-card__title {
-            font-size: var(--font-size-lg);
-            color: var(--color-dark);
-            margin: 0 0 var(--spacing-sm) 0;
-            line-height: 1.4;
-            flex-grow: 1;
-        }
-
-        body.dark-theme .news-card__title {
-            color: var(--color-dark-text);
-        }
-
-        .news-card__excerpt {
-            color: var(--color-text-light);
-            line-height: 1.6;
-            margin: 0 0 var(--spacing-md) 0;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        body.dark-theme .news-card__excerpt {
-            color: var(--color-dark-text-light);
-        }
-
-        .news-card__footer {
-            margin-top: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: var(--spacing-md);
-            border-top: 1px solid var(--color-border);
-        }
-
-        .news-card__tags {
-            display: flex;
-            gap: var(--spacing-xs);
-            flex-wrap: wrap;
-        }
-
-        .news-card__tag {
-            background: var(--color-light);
-            color: var(--color-text);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: var(--font-size-xs);
-            font-weight: 500;
-            transition: var(--transition-fast);
-        }
-
-        body.dark-theme .news-card__tag {
-            background: var(--color-dark-light);
-            color: var(--color-dark-text);
-        }
-
-        .news-card__tag:hover {
-            background: var(--color-primary);
-            color: var(--color-white);
-        }
-
-        .news-card__read-more {
-            color: var(--color-primary);
-            text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-            transition: var(--transition-fast);
-        }
-
-        .news-card__read-more:hover {
-            color: var(--color-secondary);
-            gap: var(--spacing-sm);
-        }
-
-        /* Главная новость (featured) */
-        .news-featured {
-            grid-column: 1 / -1;
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .news-featured__card {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            background: linear-gradient(135deg, var(--color-dark), var(--color-dark-light));
-            color: var(--color-white);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            min-height: 400px;
-        }
-
-        @media (max-width: 768px) {
-            .news-featured__card {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .news-featured__image {
-            width: 100%;
-            height: 100%;
-            min-height: 300px;
-            object-fit: cover;
-        }
-
-        .news-featured__content {
-            padding: var(--spacing-xl);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .news-featured__meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-md);
-        }
-
-        .news-featured__date {
-            background: rgba(255, 255, 255, 0.2);
-            color: var(--color-white);
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: var(--font-size-sm);
-        }
-
-        .news-featured__author {
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-        }
-
-        .news-featured__title {
-            font-size: var(--font-size-2xl);
-            margin: 0 0 var(--spacing-md) 0;
-            line-height: 1.3;
-        }
-
-        .news-featured__excerpt {
-            font-size: var(--font-size-lg);
-            line-height: 1.6;
-            opacity: 0.9;
-            margin-bottom: var(--spacing-lg);
-            flex-grow: 1;
-        }
-
-        .news-featured__tags {
-            display: flex;
-            gap: var(--spacing-sm);
-            flex-wrap: wrap;
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .news-featured__tag {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--color-white);
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: var(--font-size-xs);
-            font-weight: 500;
-            transition: var(--transition-fast);
-        }
-
-        .news-featured__tag:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .news-featured__actions {
-            display: flex;
-            gap: var(--spacing-sm);
-        }
-
-        /* Пагинация */
-        .news-pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: var(--spacing-sm);
-            margin-top: var(--spacing-xl);
-            padding-top: var(--spacing-lg);
-            border-top: 1px solid var(--color-border);
-        }
-
-        .news-pagination__button {
-            padding: var(--spacing-sm) var(--spacing-md);
-            border: 2px solid var(--color-border);
-            background: var(--color-white);
-            color: var(--color-text);
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-normal);
-            min-width: 40px;
-            text-align: center;
-        }
-
-        body.dark-theme .news-pagination__button {
-            background: var(--color-dark-surface);
-            border-color: var(--color-dark-light);
-            color: var(--color-dark-text);
-        }
-
-        .news-pagination__button:hover:not(.news-pagination__button--disabled) {
-            background: var(--color-primary);
-            border-color: var(--color-primary);
-            color: var(--color-white);
-            transform: translateY(-2px);
-        }
-
-        .news-pagination__button--active {
-            background: var(--color-primary);
-            border-color: var(--color-primary);
-            color: var(--color-white);
-        }
-
-        .news-pagination__button--disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .news-pagination__button--disabled:hover {
-            transform: none;
-            background: var(--color-white);
-            border-color: var(--color-border);
-            color: var(--color-text);
-        }
-
-        body.dark-theme .news-pagination__button--disabled:hover {
-            background: var(--color-dark-surface);
-            border-color: var(--color-dark-light);
-            color: var(--color-dark-text);
-        }
-
-        /* Анимации */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .news-item {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        /* Состояния */
-        .news-card[data-state="read"] {
-            opacity: 0.7;
-        }
-
-        .news-card[data-state="read"] .news-card__title {
-            color: var(--color-text-light);
-        }
-
-        body.dark-theme .news-card[data-state="read"] .news-card__title {
-            color: var(--color-dark-text-light);
-        }
-
-        .news-card[data-state="saved"] {
-            border: 2px solid var(--color-success);
-        }
-
-        /* Кнопка сохранения */
-        .news-card__save-btn {
-            position: absolute;
-            top: var(--spacing-md);
-            left: var(--spacing-md);
-            width: 36px;
-            height: 36px;
-            background: rgba(255, 255, 255, 0.9);
             border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition-normal);
-            z-index: 2;
+            overflow: hidden;
         }
-
-        body.dark-theme .news-card__save-btn {
-            background: rgba(30, 41, 59, 0.9);
-            color: var(--color-dark-text);
+        .news-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(67,97,238,0.2) !important;
         }
-
-        .news-card__save-btn:hover {
-            transform: scale(1.1);
-            background: var(--color-white);
+        .news-card img {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
         }
-
-        body.dark-theme .news-card__save-btn:hover {
-            background: var(--color-dark-surface);
+        .news-card:hover img {
+            transform: scale(1.08);
         }
-
-        .news-card__save-btn[data-state="saved"] {
-            color: var(--color-danger);
+        .badge-category {
+            font-size: 0.75rem;
+            padding: 0.4rem 0.8rem;
         }
-
-        /* Подсветка при фильтрации */
-        .news-card--highlight {
-            animation: highlightPulse 2s ease;
+        .filter-btn {
+            transition: all 0.3s ease;
         }
-
-        @keyframes highlightPulse {
-            0%, 100% { box-shadow: var(--shadow-lg); }
-            50% { box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.3); }
+        .filter-btn.active {
+            background-color: var(--bs-primary) !important;
+            border-color: var(--bs-primary) !important;
+            color: white !important;
         }
     </style>
 </head>
-<body>
-    <div class="page">
-        <header class="header">
-            <button class="header__theme-toggle" id="themeToggle" aria-label="Переключить тему">
-                🌓
+<body class="bg-light">
+
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../index.html">
+                <i class="bi bi-newspaper me-2"></i> Digital Портфолио
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <h1 class="header__title">Актуальные Новости</h1>
-        </header>
-        
-        <nav class="nav">
-            <ul class="nav__list">
-                <li class="nav__item">
-                    <a class="nav__link" href="../index.html">Главная</a>
-                </li>
-                <li class="nav__item">
-                    <a class="nav__link nav__link--active" href="news.html">Новости</a>
-                </li>
-                <li class="nav__item">
-                    <a class="nav__link" href="practices.html">Практики</a>
-                </li>
-                <li class="nav__item">
-                    <a class="nav__link" href="goods.html">Товары</a>
-                </li>
-                <li class="nav__item">
-                    <a class="nav__link" href="contacts.html">Контакты</a>
-                </li>
-            </ul>
-        </nav>
-
-        <main class="main">
-            <section class="section">
-                <!-- Hero секция -->
-                <div class="news-hero">
-                    <h2 class="news-hero__title">Свежие Обновления</h2>
-                    <p class="news-hero__subtitle">Будьте в курсе последних событий в мире технологий, разработки и digital-индустрии</p>
-                </div>
-
-                <!-- Категории -->
-                <div class="news-categories">
-                    <button class="news-categories__button news-categories__button--active" data-category="all">
-                        Все новости
-                    </button>
-                    <button class="news-categories__button" data-category="technology">
-                        Технологии
-                    </button>
-                    <button class="news-categories__button" data-category="development">
-                        Разработка
-                    </button>
-                    <button class="news-categories__button" data-category="design">
-                        Дизайн
-                    </button>
-                    <button class="news-categories__button" data-category="business">
-                        Бизнес
-                    </button>
-                    <button class="news-categories__button" data-category="security">
-                        Безопасность
-                    </button>
-                </div>
-
-                <!-- Главная новость -->
-                <article class="news-featured news-item">
-                    <div class="news-featured__card" onclick="openNewsModal(1)">
-                        <img src="../images/news-featured.jpg" alt="Главная новость" class="news-featured__image" 
-                             onerror="this.style.background='linear-gradient(135deg, var(--color-primary), var(--color-secondary))'">
-                        <div class="news-featured__content">
-                            <div class="news-featured__meta">
-                                <span class="news-featured__date">27.11.2025</span>
-                                <span class="news-featured__author">Блащенко Юрий Евгеньевич</span>
-                            </div>
-                            <h3 class="news-featured__title">Убийца генерала Москалика получил пожизненный срок</h3>
-                            <p class="news-featured__excerpt">
-                                Второй Западный окружной военный суд признал вину Игната Кузина в убийстве генерал-лейтенанта 
-                                Ярослава Москалика и приговорил его к пожизненному заключению. Об этом пишет ТАСС.
-                            </p>
-                            <div class="news-featured__tags">
-                                <span class="news-featured__tag">Политика</span>
-                                <span class="news-featured__tag">Суд</span>
-                                <span class="news-featured__tag">Общество</span>
-                                <span class="news-featured__tag">Москва</span>
-                            </div>
-                            <div class="news-featured__actions">
-                                <button class="button button--primary" onclick="event.stopPropagation(); openNewsModal(1)">
-                                    Читать полностью
-                                </button>
-                                <button class="button button--secondary" onclick="event.stopPropagation(); shareNews(1)">
-                                    Поделиться
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Сетка новостей -->
-                <div class="news-grid" id="newsGrid">
-                    <!-- Новость 1 -->
-                    <article class="card news-card news-item" data-category="business" data-id="2" data-state="unread">
-                        <button class="news-card__save-btn" data-state="unsaved" onclick="toggleSaveNews(2, event)">
-                            💾
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="practices.html">Практики</a></li>
+                    <li class="nav-item"><a class="nav-link" href="goods.html">Товары</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li>
+                    <li class="nav-item ms-3">
+                        <button class="btn btn-outline-light" id="themeToggle">
+                            <i class="bi bi-moon-stars"></i>
                         </button>
-                        <span class="news-card__badge news-card__badge--hot">Горячая</span>
-                        <div class="news-card__image-container">
-                            <div class="news-card__image" style="background: linear-gradient(135deg, #667eea, #764ba2);"></div>
-                        </div>
-                        <div class="news-card__content">
-                            <div class="news-card__meta">
-                                <span class="news-card__date">26.11.2025</span>
-                                <span class="news-card__author">Блащенко Юрий</span>
-                            </div>
-                            <h4 class="news-card__title">Москвичка согласилась забрать ключи от домофона и лишилась 28,5 млн рублей</h4>
-                            <p class="news-card__excerpt">
-                                В Москве у женщины похитили 28,5 млн рублей по схеме с домофоном. Пожилая жительница Москвы 
-                                отдала аферистам 28,5 миллионов рублей после предложения получить ключи от домофона.
-                            </p>
-                            <div class="news-card__footer">
-                                <div class="news-card__tags">
-                                    <span class="news-card__tag">Криминал</span>
-                                    <span class="news-card__tag">Москва</span>
-                                    <span class="news-card__tag">Финансы</span>
-                                </div>
-                                <a href="#" class="news-card__read-more" onclick="event.stopPropagation(); openNewsModal(2)">
-                                    Читать
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                                        <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Новость 2 -->
-                    <article class="card news-card news-item" data-category="technology" data-id="3" data-state="unread">
-                        <button class="news-card__save-btn" data-state="unsaved" onclick="toggleSaveNews(3, event)">
-                            💾
-                        </button>
-                        <span class="news-card__badge news-card__badge--exclusive">Эксклюзив</span>
-                        <div class="news-card__image-container">
-                            <div class="news-card__image" style="background: linear-gradient(135deg, #06b6d4, #0ea5e9);"></div>
-                        </div>
-                        <div class="news-card__content">
-                            <div class="news-card__meta">
-                                <span class="news-card__date">25.11.2025</span>
-                                <span class="news-card__author">Блащенко Юрий</span>
-                            </div>
-                            <h4 class="news-card__title">Новые технологии в веб-разработке 2025</h4>
-                            <p class="news-card__excerpt">
-                                Обзор современных технологий и фреймворков, которые изменят подход к созданию веб-приложений 
-                                в следующем году. Инсайдерская информация от ведущих разработчиков.
-                            </p>
-                            <div class="news-card__footer">
-                                <div class="news-card__tags">
-                                    <span class="news-card__tag">Технологии</span>
-                                    <span class="news-card__tag">Разработка</span>
-                                    <span class="news-card__tag">Инновации</span>
-                                </div>
-                                <a href="#" class="news-card__read-more" onclick="event.stopPropagation(); openNewsModal(3)">
-                                    Читать
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                                        <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Новость 3 -->
-                    <article class="card news-card news-item" data-category="security" data-id="4" data-state="unread">
-                        <button class="news-card__save-btn" data-state="unsaved" onclick="toggleSaveNews(4, event)">
-                            💾
-                        </button>
-                        <div class="news-card__image-container">
-                            <div class="news-card__image" style="background: linear-gradient(135deg, #f59e0b, #f97316);"></div>
-                        </div>
-                        <div class="news-card__content">
-                            <div class="news-card__meta">
-                                <span class="news-card__date">24.11.2025</span>
-                                <span class="news-card__author">Блащенко Юрий</span>
-                            </div>
-                            <h4 class="news-card__title">Кибербезопасность в 2025: новые вызовы и решения</h4>
-                            <p class="news-card__excerpt">
-                                Анализ современных угроз кибербезопасности и методов защиты. Эксперты делятся прогнозами 
-                                и рекомендациями для бизнеса и частных пользователей.
-                            </p>
-                            <div class="news-card__footer">
-                                <div class="news-card__tags">
-                                    <span class="news-card__tag">Безопасность</span>
-                                    <span class="news-card__tag">Технологии</span>
-                                    <span class="news-card__tag">Бизнес</span>
-                                </div>
-                                <a href="#" class="news-card__read-more" onclick="event.stopPropagation(); openNewsModal(4)">
-                                    Читать
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                                        <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Новость 4 -->
-                    <article class="card news-card news-item" data-category="design" data-id="5" data-state="unread">
-                        <button class="news-card__save-btn" data-state="unsaved" onclick="toggleSaveNews(5, event)">
-                            💾
-                        </button>
-                        <span class="news-card__badge news-card__badge--featured">Рекомендуем</span>
-                        <div class="news-card__image-container">
-                            <div class="news-card__image" style="background: linear-gradient(135deg, #8b5cf6, #a855f7);"></div>
-                        </div>
-                        <div class="news-card__content">
-                            <div class="news-card__meta">
-                                <span class="news-card__date">23.11.2025</span>
-                                <span class="news-card__author">Блащенко Юрий</span>
-                            </div>
-                            <h4 class="news-card__title">Тренды UI/UX дизайна на 2026 год</h4>
-                            <p class="news-card__excerpt">
-                                Обзор ключевых трендов в дизайне интерфейсов. Что будет актуально в следующем году? 
-                                Советы от ведущих дизайнеров мировых компаний.
-                            </p>
-                            <div class="news-card__footer">
-                                <div class="news-card__tags">
-                                    <span class="news-card__tag">Дизайн</span>
-                                    <span class="news-card__tag">UI/UX</span>
-                                    <span class="news-card__tag">Тренды</span>
-                                </div>
-                                <a href="#" class="news-card__read-more" onclick="event.stopPropagation(); openNewsModal(5)">
-                                    Читать
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                                        <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Новость 5 -->
-                    <article class="card news-card news-item" data-category="development" data-id="6" data-state="unread">
-                        <button class="news-card__save-btn" data-state="unsaved" onclick="toggleSaveNews(6, event)">
-                            💾
-                        </button>
-                        <div class="news-card__image-container">
-                            <div class="news-card__image" style="background: linear-gradient(135deg, #10b981, #34d399);"></div>
-                        </div>
-                        <div class="news-card__content">
-                            <div class="news-card__meta">
-                                <span class="news-card__date">22.11.2025</span>
-                                <span class="news-card__author">Блащенко Юрий</span>
-                            </div>
-                            <h4 class="news-card__title">React 19: что нового ждать разработчикам</h4>
-                            <p class="news-card__excerpt">
-                                Анонсирована новая версия React. Рассматриваем ключевые изменения, улучшения производительности 
-                                и новые возможности для разработчиков.
-                            </p>
-                            <div class="news-card__footer">
-                                <div class="news-card__tags">
-                                    <span class="news-card__tag">React</span>
-                                    <span class="news-card__tag">Разработка</span>
-                                    <span class="news-card__tag">JavaScript</span>
-                                </div>
-                                <a href="#" class="news-card__read-more" onclick="event.stopPropagation(); openNewsModal(6)">
-                                    Читать
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                                        <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Новость 6 -->
-                    <article class="card news-card news-item" data-category="technology" data-id="7" data-state="unread">
-                        <button class="news-card__save-btn" data-state="unsaved" onclick="toggleSaveNews(7, event)">
-                            💾
-                        </button>
-                        <div class="news-card__image-container">
-                            <div class="news-card__image" style="background: linear-gradient(135deg, #ef4444, #f87171);"></div>
-                        </div>
-                        <div class="news-card__content">
-                            <div class="news-card__meta">
-                                <span class="news-card__date">21.11.2025</span>
-                                <span class="news-card__author">Блащенко Юрий</span>
-                            </div>
-                            <h4 class="news-card__title">Застрявшего в контейнере для пожертвований одежды мужчину не удалось спасти</h4>
-                            <p class="news-card__excerpt">
-                                В США застрявшего в контейнере для пожертвований одежды мужчину не удалось спасти, 
-                                пишет New York Post. Трагический инцидент произошел в Хьюстоне.
-                            </p>
-                            <div class="news-card__footer">
-                                <div class="news-card__tags">
-                                    <span class="news-card__tag">Происшествия</span>
-                                    <span class="news-card__tag">США</span>
-                                    <span class="news-card__tag">Общество</span>
-                                </div>
-                                <a href="#" class="news-card__read-more" onclick="event.stopPropagation(); openNewsModal(7)">
-                                    Читать
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                                        <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-
-                <!-- Пагинация -->
-                <div class="news-pagination">
-                    <button class="news-pagination__button news-pagination__button--disabled">
-                        ← Назад
-                    </button>
-                    <button class="news-pagination__button news-pagination__button--active">
-                        1
-                    </button>
-                    <button class="news-pagination__button" onclick="goToPage(2)">
-                        2
-                    </button>
-                    <button class="news-pagination__button" onclick="goToPage(3)">
-                        3
-                    </button>
-                    <button class="news-pagination__button" onclick="goToPage(4)">
-                        4
-                    </button>
-                    <button class="news-pagination__button" onclick="goToPage(5)">
-                        5
-                    </button>
-                    <span style="padding: 0 var(--spacing-sm); color: var(--color-text-light);">...</span>
-                    <button class="news-pagination__button" onclick="goToPage(10)">
-                        10
-                    </button>
-                    <button class="news-pagination__button" onclick="goToPage(2)">
-                        Вперед →
-                    </button>
-                </div>
-            </section>
-        </main>
-
-        <footer class="footer">
-            <div class="footer__content">
-                <div class="footer__section">
-                    <h3 class="footer__title">Новостной портал</h3>
-                    <p class="footer__text">Актуальные новости из мира технологий, разработки и digital-индустрии.</p>
-                </div>
-                <div class="footer__section">
-                    <h3 class="footer__title">Категории</h3>
-                    <nav class="footer__nav">
-                        <a href="#" class="footer__link" onclick="filterByCategory('technology')">Технологии</a>
-                        <a href="#" class="footer__link" onclick="filterByCategory('development')">Разработка</a>
-                        <a href="#" class="footer__link" onclick="filterByCategory('design')">Дизайн</a>
-                        <a href="#" class="footer__link" onclick="filterByCategory('business')">Бизнес</a>
-                    </nav>
-                </div>
-                <div class="footer__section">
-                    <h3 class="footer__title">Подписка</h3>
-                    <p class="footer__text">Будьте в курсе последних новостей и обновлений.</p>
-                    <button class="button button--primary" style="margin-top: var(--spacing-sm);" onclick="openSubscribeModal()">
-                        Подписаться
-                    </button>
-                </div>
+                    </li>
+                </ul>
             </div>
-            <div class="footer__bottom">
-                <p class="footer__copyright">&copy; 2024 Digital Портфолио. Все новости защищены.</p>
-            </div>
-        </footer>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="bg-gradient text-white py-5" style="background: linear-gradient(135deg, #4361ee, #7209b7);">
+        <div class="container text-center py-5">
+            <h1 class="display-4 fw-bold">Новости и события</h1>
+            <p class="lead">Следите за жизнью курса «Фронтенд и бэкенд разработка»</p>
+            <p class="mb-0">ИПТИП • 1 семестр 2025/2026 • Преподаватель: Астафьев Р.У.</p>
+        </div>
     </div>
 
-    <!-- Модальное окно для новости -->
-    <dialog class="dialog" id="newsDialog" style="max-width: 800px;">
-        <div class="dialog__header">
-            <h2 class="dialog__title" id="newsModalTitle"></h2>
-        </div>
-        <div class="dialog__body">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg);">
-                <div style="display: flex; gap: var(--spacing-sm); align-items: center;">
-                    <span class="news-card__date" id="newsModalDate"></span>
-                    <span class="news-card__author" id="newsModalAuthor"></span>
-                                </div>
-                <div style="display: flex; gap: var(--spacing-sm);">
-                    <button class="button button--secondary" onclick="shareNews(currentNewsId)">
-                        Поделиться
-                    </button>
-                    <button class="button button--secondary" id="saveModalBtn" onclick="toggleSaveNews(currentNewsId)">
-                        Сохранить
-                    </button>
-                </div>
-            </div>
-            
-            <div class="news-card__tags" id="newsModalTags" style="margin-bottom: var(--spacing-lg);">
-            </div>
-            
-            <img src="" alt="" class="news-card__image" id="newsModalImage" 
-                 style="width: 100%; height: 300px; object-fit: cover; border-radius: var(--radius-md); margin-bottom: var(--spacing-lg);"
-                 onerror="this.style.background='linear-gradient(135deg, var(--color-primary), var(--color-secondary))'">
-            
-            <div id="newsModalContent" style="line-height: 1.8; color: var(--color-text);">
+    <div class="container py-5">
+        <!-- Фильтры -->
+        <div class="text-center mb-5">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary filter-btn active" data-filter="all">Все</button>
+                <button type="button" class="btn btn-outline-primary filter-btn" data-filter="practice">Практики</button>
+                <button type="button" class="btn btn-outline-primary filter-btn" data-filter="event">Мероприятия</button>
+                <button type="button" class="btn btn-outline-primary filter-btn" data-filter="achievement">Достижения</button>
             </div>
         </div>
-        <div class="dialog__footer">
-            <button class="button" onclick="document.getElementById('newsDialog').close()">
-                Закрыть
-            </button>
-        </div>
-    </dialog>
 
-    <!-- Модальное окно подписки -->
-    <dialog class="dialog" id="subscribeDialog" style="max-width: 500px;">
-        <div class="dialog__header">
-            <h2 class="dialog__title">Подписка на новости</h2>
-        </div>
-        <div class="dialog__body">
-            <p style="margin-bottom: var(--spacing-lg); color: var(--color-text);">
-                Подпишитесь на нашу рассылку, чтобы получать самые свежие новости первыми.
-            </p>
-            <form id="subscribeForm" style="display: flex; flex-direction: column; gap: var(--spacing-md);">
-                <div class="form-group">
-                    <label for="subscribeEmail" class="form-label">Email адрес</label>
-                    <input type="email" id="subscribeEmail" class="form-input" 
-                           placeholder="ваш@email.com" required>
+        <!-- Сетка новостей -->
+        <div class="row g-4" id="newsGrid">
+            <!-- Новость 1 -->
+            <div class="col-lg-6 col-xxl-4 news-item" data-category="practice">
+                <div class="card news-card shadow-sm h-100">
+                    <img src="https://via.placeholder.com/600x400/4361ee/ffffff?text=Практика+№12" class="card-img-top" alt="Практика 12">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-primary badge-category">Практика</span>
+                            <small class="text-muted">10 декабря 2025</small>
+                        </div>
+                        <h5 class="card-title">Сдана практика №12 — Bootstrap 5.3</h5>
+                        <p class="card-text text-muted">Полная переделка проекта на Bootstrap. Все компоненты заменены на нативные классы фреймворка.</p>
+                        <a href="#" class="mt-auto btn btn-outline-primary btn-sm">Читать →</a>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="subscribeName" class="form-label">Имя</label>
-                    <input type="text" id="subscribeName" class="form-input" 
-                           placeholder="Ваше имя">
+            </div>
+
+            <!-- Новость 2 -->
+            <div class="col-lg-6 col-xxl-4 news-item" data-category="achievement">
+                <div class="card news-card shadow-sm h-100">
+                    <img src="https://via.placeholder.com/600x400/2ecc71/ffffff?text=100%25" class="card-img-top" alt="100%">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-success badge-category">Достижение</span>
+                            <small class="text-muted">8 декабря 2025</small>
+                        </div>
+                        <h5 class="card-title">11 из 13 практик сданы на 100%</h5>
+                        <p class="card-text text-muted">Осталось только доделать финальный проект — и можно на каникулы!</p>
+                        <a href="#" class="mt-auto btn btn-outline-success btn-sm">Подробнее →</a>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-checkbox">
-                        <input type="checkbox" required>
-                        <span>Я согласен с <a href="#" style="color: var(--color-primary);">политикой конфиденциальности</a></span>
-                    </label>
+            </div>
+
+            <!-- Новость 3 -->
+            <div class="col-lg-6 col-xxl-4 news-item" data-category="event">
+                <div class="card news-card shadow-sm h-100">
+                    <img src="https://via.placeholder.com/600x400/f39c12/ffffff?text=Хакатон" class="card-img-top" alt="Хакатон">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-warning badge-category">Мероприятие</span>
+                            <small class="text-muted">5 декабря 2025</small>
+                        </div>
+                        <h5 class="card-title">Участие в хакатоне РТУ МИРЭА</h5>
+                        <p class="card-text text-muted">Команда ЭФБО-17-24 заняла 3 место с проектом на React + Node.js</p>
+                        <a href="#" class="mt-auto btn btn-outline-warning btn-sm">Фотоотчёт →</a>
+                    </div>
                 </div>
-            </form>
+            </div>
+
+            <!-- Добавь ещё 6–9 карточек сам — структура та же -->
         </div>
-        <div class="dialog__footer">
-            <button class="button" onclick="document.getElementById('subscribeDialog').close()">
-                Отмена
-            </button>
-            <button class="button button--primary" onclick="subscribeNewsletter()">
-                Подписаться
-            </button>
-        </div>
-    </dialog>
+
+        <!-- Пагинация -->
+        <nav aria-label="Пагинация новостей" class="mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled"><a class="page-link" href="#">« Назад</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Вперёд »</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Bootstrap JS + Тема -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/theme-toggle.js"></script>
 
     <script>
-        // Текущая открытая новость
-        let currentNewsId = null;
+        // Фильтрация новостей
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
 
-        // Данные новостей для модальных окон
-        const newsData = {
-            1: {
-                title: "Убийца генерала Москалика получил пожизненный срок",
-                date: "27.11.2025",
-                author: "Блащенко Юрий Евгеньевич",
-                tags: ["Политика", "Суд", "Общество", "Москва"],
-                content: `
-                    <p>Второй Западный окружной военный суд признал вину Игната Кузина в убийстве генерал-лейтенанта 
-                    Ярослава Москалика и приговорил его к пожизненному заключению. Об этом пишет ТАСС.</p>
-                    
-                    <p>Суд установил, что Кузин совершил умышленное убийство высшего офицера российской армии. 
-                    В ходе судебного процесса были рассмотрены все обстоятельства дела, включая мотивы преступления 
-                    и степень вины подсудимого.</p>
-                    
-                    <p>Представители следствия отметили, что данное преступление было тщательно спланировано 
-                    и осуществлено с особой жестокостью. Судья в своем вердикте подчеркнул тяжесть преступления 
-                    и необходимость максимально строгого наказания.</p>
-                    
-                    <p>Родственники погибшего генерала присутствовали на заседании суда и выразили удовлетворение 
-                    вынесенным приговором. "Справедливость восторжествовала", - заявил представитель семьи Москалика.</p>
-                    
-                    <p>Адвокаты Кузина заявили о намерении обжаловать приговор в вышестоящей инстанции.</p>
-                `
-            },
-            2: {
-                title: "Москвичка согласилась забрать ключи от домофона и лишилась 28,5 млн рублей",
-                date: "26.11.2025",
-                author: "Блащенко Юрий",
-                tags: ["Криминал", "Москва", "Финансы", "Мошенничество"],
-                content: `
-                    <p>В Москве у женщины похитили 28,5 млн рублей по схеме с домофоном. Пожилая жительница Москвы 
-                    отдала аферистам 28,5 миллионов рублей после предложения получить ключи от домофона.</p>
-                    
-                    <p>По данным следствия, мошенники позвонили 72-летней женщине и представились сотрудниками 
-                    обслуживающей компании. Они сообщили, что в ее подъезде меняют домофоны и нужно получить 
-                    новые ключи. Для этого потребовали оплатить "страховой депозит" на крупную сумму.</p>
-                    
-                    <p>Женщина несколько раз переводила деньги на указанные счета, общая сумма составила 
-                    28,5 миллиона рублей. Когда она попыталась вернуть деньги, мошенники перестали выходить 
-                    на связь.</p>
-                    
-                    <p>Полиция возбудила уголовное дело по статье "Мошенничество в особо крупном размере". 
-                    Следователи отмечают, что это одна из самых крупных сумм, похищенных у пенсионеров 
-                    в Москве за последние годы.</p>
-                    
-                    <p>Эксперты по кибербезопасности предупреждают: никогда не переводите деньги незнакомцам 
-                    и всегда проверяйте информацию через официальные каналы связи.</p>
-                `
-            },
-            3: {
-                title: "Новые технологии в веб-разработке 2025",
-                date: "25.11.2025",
-                author: "Блащенко Юрий",
-                tags: ["Технологии", "Разработка", "Инновации", "Веб"],
-                content: `
-                    <p>Обзор современных технологий и фреймворков, которые изменят подход к созданию веб-приложений 
-                    в следующем году. Инсайдерская информация от ведущих разработчиков.</p>
-                    
-                    <h3>1. React 19 и Server Components</h3>
-                    <p>Новая версия React принесет революционные изменения в виде Server Components. 
-                    Это позволит выполнять часть компонентов на сервере, что значительно улучшит 
-                    производительность и SEO.</p>
-                    
-                    <h3>2. TypeScript 5.5</h3>
-                    <p>Ожидаются улучшения в выводе типов и производительности компилятора. 
-                    Новые возможности сделают TypeScript еще более привлекательным для крупных проектов.</p>
-                    
-                    <h3>3. Bun 2.0</h3>
-                    <p>Альтернатива Node.js продолжает набирать популярность. Вторая версия обещает 
-                    еще большую производительность и улучшенную совместимость с экосистемой npm.</p>
-                    
-                    <h3>4. WebAssembly 2.0</h3>
-                    <p>Стандарт получает новые возможности для работы с потоками и улучшенную интеграцию 
-                    с JavaScript. Это откроет новые горизонты для веб-приложений.</p>
-                    
-                    <p>Эксперты советуют разработчикам уже сейчас начинать изучать эти технологии, 
-                    чтобы быть готовыми к изменениям в индустрии.</p>
-                `
-            },
-            4: {
-                title: "Кибербезопасность в 2025: новые вызовы и решения",
-                date: "24.11.2025",
-                author: "Блащенко Юрий",
-                tags: ["Безопасность", "Технологии", "Бизнес", "Кибербезопасность"],
-                content: `
-                    <p>Анализ современных угроз кибербезопасности и методов защиты. Эксперты делятся прогнозами 
-                    и рекомендациями для бизнеса и частных пользователей.</p>
-                    
-                    <h3>Основные угрозы 2025 года</h3>
-                    <p><strong>Искусственный интеллект в руках хакеров:</strong> Злоумышленники начинают 
-                    использовать AI для создания более изощренных атак и социальной инженерии.</p>
-                    
-                    <p><strong>Атаки на цепочки поставок:</strong> Хакеры атакуют не конечные компании, 
-                    а их поставщиков, чтобы получить доступ к более ценным данным.</p>
-                    
-                    <p><strong>Квантовые вычисления:</strong> Появление квантовых компьютеров ставит под 
-                    угрозу современные алгоритмы шифрования.</p>
-                    
-                    <h3>Рекомендации по защите</h3>
-                    <p>1. Внедрение Zero Trust архитектуры</p>
-                    <p>2. Регулярное обучение сотрудников кибербезопасности</p>
-                    <p>3. Использование многофакторной аутентификации</p>
-                    <p>4. Регулярное обновление ПО и систем</p>
-                    
-                    <p>Эксперты отмечают, что инвестиции в кибербезопасность должны быть приоритетом 
-                    для любого бизнеса в 2025 году.</p>
-                `
-            },
-            5: {
-                title: "Тренды UI/UX дизайна на 2026 год",
-                date: "23.11.2025",
-                author: "Блащенко Юрий",
-                tags: ["Дизайн", "UI/UX", "Тренды", "Интерфейсы"],
-                content: `
-                    <p>Обзор ключевых трендов в дизайне интерфейсов. Что будет актуально в следующем году? 
-                    Советы от ведущих дизайнеров мировых компаний.</p>
-                    
-                    <h3>1. Неоморфизм 2.0</h3>
-                    <p>Улучшенная версия неоморфизма с большей глубиной и реалистичностью. 
-                    Тени и свет становятся более мягкими и естественными.</p>
-                    
-                    <h3>2. Анимированные иллюстрации</h3>
-                    <p>Статические иллюстрации уходят в прошлое. На смену приходят 
-                    микроанимации и интерактивные элементы.</p>
-                    
-                    <h3>3. Голосовые интерфейсы</h3>
-                    <p>С развитием AI голосовое управление становится стандартом для многих приложений. 
-                    Дизайнеры учатся создавать голосовые пользовательские интерфейсы (VUI).</p>
-                    
-                    <h3>4. Персонализация на основе AI</h3>
-                    <p>Искусственный интеллект анализирует поведение пользователей и адаптирует 
-                    интерфейс под их предпочтения в реальном времени.</p>
-                    
-                    <h3>5. Устойчивый дизайн</h3>
-                    <p>Фокус на экологичности: темные темы для экономии энергии, 
-                    минималистичные интерфейсы и оптимизированные ресурсы.</p>
-                    
-                    <p>Ключевой тренд 2026 года - создание эмоциональной связи с пользователем 
-                    через продуманный и персонализированный дизайн.</p>
-                `
-            },
-            6: {
-                title: "React 19: что нового ждать разработчикам",
-                date: "22.11.2025",
-                author: "Блащенко Юрий",
-                tags: ["React", "Разработка", "JavaScript", "Фреймворки"],
-                content: `
-                    <p>Анонсирована новая версия React. Рассматриваем ключевые изменения, улучшения производительности 
-                    и новые возможности для разработчиков.</p>
-                    
-                    <h3>Server Components (стабильная версия)</h3>
-                    <p>После долгого периода экспериментальной версии, Server Components наконец-то 
-                    становятся стабильной фичей. Это позволяет выполнять компоненты на сервере, 
-                    уменьшая размер бандла и улучшая время загрузки.</p>
-                    
-                    <h3>Улучшенный Concurrent Mode</h3>
-                    <p>React 19 делает Concurrent Mode более стабильным и производительным. 
-                    Приложения становятся более отзывчивыми за счет приоритизации задач.</p>
-                    
-                    <h3>Новый хуки</h3>
-                    <p>Добавлены новые встроенные хуки для работы с формами, анимациями и 
-                    состоянием приложения. Это уменьшит необходимость в сторонних библиотеках.</p>
-                    
-                    <h3>Улучшенная TypeScript поддержка</h3>
-                    <p>Лучшая типизация для хуков и компонентов, а также улучшенная 
-                    производительность TypeScript компилятора с React.</p>
-                    
-                    <h3>DevTools 5.0</h3>
-                    <p>Обновленные инструменты разработчика с улучшенной производительностью 
-                    профилировщика и новой панелью для отладки Server Components.</p>
-                    
-                    <p>Ожидается, что React 19 выйдет в первом квартале 2025 года. 
-                    Разработчикам рекомендуется начать подготовку к миграции уже сейчас.</p>
-                `
-            },
-            7: {
-                title: "Застрявшего в контейнере для пожертвований одежды мужчину не удалось спасти",
-                date: "21.11.2025",
-                author: "Блащенко Юрий",
-                tags: ["Происшествия", "США", "Общество", "Трагедия"],
-                content: `
-                    <p>В США застрявшего в контейнере для пожертвований одежды мужчину не удалось спасти, 
-                    пишет New York Post. Трагический инцидент произошел в Хьюстоне.</p>
-                    
-                    <p>По данным полиции, 45-летний мужчина попытался забрать одежду из контейнера 
-                    для пожертвований в ночное время. Он залез внутрь через приемное отверстие, 
-                    но не смог выбраться обратно.</p>
-                    
-                    <p>Свидетели сообщили, что слышали крики о помощи рано утром. 
-                    Когда прибыли спасатели, мужчина уже не подавал признаков жизни.</p>
-                    
-                    <p>Пожарные пытались вскрыть контейнер, но конструкция оказалась слишком прочной. 
-                    На операцию по извлечению тела ушло несколько часов.</p>
-                    
-                    <p>Представители благотворительной организации, которой принадлежал контейнер, 
-                    выразили соболезнования семье погибшего. Они отметили, что подобные инциденты 
-                    происходят несколько раз в год по всей стране.</p>
-                    
-                    <p>Власти призывают граждан не пытаться забирать вещи из контейнеров для 
-                    пожертвований самостоятельно, а обращаться в соответствующие организации.</p>
-                `
-            }
-        };
-
-        // Открытие модального окна новости
-        function openNewsModal(newsId) {
-            const news = newsData[newsId];
-            if (!news) return;
-            
-            currentNewsId = newsId;
-            
-            // Заполняем данные
-            document.getElementById('newsModalTitle').textContent = news.title;
-            document.getElementById('newsModalDate').textContent = news.date;
-            document.getElementById('newsModalAuthor').textContent = news.author;
-            
-            // Очищаем и заполняем теги
-            const tagsContainer = document.getElementById('newsModalTags');
-            tagsContainer.innerHTML = '';
-            news.tags.forEach(tag => {
-                const tagElement = document.createElement('span');
-                tagElement.className = 'news-card__tag';
-                tagElement.textContent = tag;
-                tagsContainer.appendChild(tagElement);
-            });
-            
-            // Заполняем контент
-            document.getElementById('newsModalContent').innerHTML = news.content;
-            
-            // Обновляем кнопку сохранения
-            const saveBtn = document.getElementById('saveModalBtn');
-            const isSaved = localStorage.getItem(`news_${newsId}_saved`) === 'true';
-            saveBtn.textContent = isSaved ? 'Удалить из сохраненных' : 'Сохранить';
-            
-            // Отмечаем новость как прочитанную
-            markNewsAsRead(newsId);
-            
-            // Показываем модальное окно
-            document.getElementById('newsDialog').showModal();
-        }
-
-        // Поделиться новостью
-        function shareNews(newsId) {
-            const news = newsData[newsId];
-            if (!news) return;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: news.title,
-                    text: news.excerpt || news.title,
-                    url: window.location.href + '?news=' + newsId
-                }).catch(console.error);
-            } else {
-                // Копируем ссылку в буфер обмена
-                const url = window.location.href + '?news=' + newsId;
-                navigator.clipboard.writeText(url)
-                    .then(() => alert('Ссылка скопирована в буфер обмена!'))
-                    .catch(console.error);
-            }
-        }
-
-        // Сохранение/удаление новости
-        function toggleSaveNews(newsId, event) {
-            if (event) event.stopPropagation();
-            
-            const isSaved = localStorage.getItem(`news_${newsId}_saved`) === 'true';
-            
-            if (isSaved) {
-                localStorage.removeItem(`news_${newsId}_saved`);
-            } else {
-                localStorage.setItem(`news_${newsId}_saved`, 'true');
-            }
-            
-            // Обновляем кнопки на карточках
-            const saveButtons = document.querySelectorAll(`[data-state][onclick*="${newsId}"]`);
-            saveButtons.forEach(btn => {
-                btn.setAttribute('data-state', isSaved ? 'unsaved' : 'saved');
-                btn.innerHTML = isSaved ? '💾' : '⭐';
-            });
-            
-            // Обновляем кнопку в модальном окне
-            if (currentNewsId === newsId) {
-                const saveBtn = document.getElementById('saveModalBtn');
-                saveBtn.textContent = isSaved ? 'Сохранить' : 'Удалить из сохраненных';
-            }
-            
-            // Добавляем/убираем класс сохраненной новости
-            const newsCard = document.querySelector(`[data-id="${newsId}"]`);
-            if (newsCard) {
-                newsCard.setAttribute('data-state', isSaved ? 'unread' : 'saved');
-            }
-        }
-
-        // Отметить новость как прочитанную
-        function markNewsAsRead(newsId) {
-            localStorage.setItem(`news_${newsId}_read`, 'true');
-            const newsCard = document.querySelector(`[data-id="${newsId}"]`);
-            if (newsCard) {
-                newsCard.setAttribute('data-state', 'read');
-            }
-        }
-
-        // Фильтрация по категориям
-        document.querySelectorAll('.news-categories__button').forEach(button => {
-            button.addEventListener('click', function() {
-                // Убираем активный класс у всех кнопок
-                document.querySelectorAll('.news-categories__button').forEach(btn => {
-                    btn.classList.remove('news-categories__button--active');
-                });
-                
-                // Добавляем активный класс текущей кнопке
-                this.classList.add('news-categories__button--active');
-                
-                const category = this.dataset.category;
-                const newsCards = document.querySelectorAll('.news-card');
-                
-                newsCards.forEach(card => {
-                    if (category === 'all' || card.dataset.category === category) {
-                        card.style.display = 'flex';
-                        card.classList.add('news-card--highlight');
-                        setTimeout(() => card.classList.remove('news-card--highlight'), 2000);
+                const filter = this.getAttribute('data-filter');
+                document.querySelectorAll('.news-item').forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = '';
                     } else {
-                        card.style.display = 'none';
+                        item.style.display = 'none';
                     }
                 });
             });
-        });
-
-        // Переход по страницам
-        function goToPage(page) {
-            alert(`Переход на страницу ${page}. В реальном приложении здесь будет загрузка данных.`);
-            // Здесь должна быть логика загрузки новостей для указанной страницы
-        }
-
-        // Открытие модального окна подписки
-        function openSubscribeModal() {
-            document.getElementById('subscribeDialog').showModal();
-        }
-
-        // Подписка на рассылку
-        function subscribeNewsletter() {
-            const email = document.getElementById('subscribeEmail').value;
-            const name = document.getElementById('subscribeName').value;
-            
-            if (!email) {
-                alert('Пожалуйста, введите email адрес');
-                return;
-            }
-            
-            // Здесь должна быть отправка данных на сервер
-            console.log('Подписка:', { email, name });
-            
-            alert('Спасибо за подписку! Вы будете получать самые свежие новости.');
-            document.getElementById('subscribeDialog').close();
-            document.getElementById('subscribeForm').reset();
-        }
-
-        // Фильтрация по категории из футера
-        function filterByCategory(category) {
-            document.querySelectorAll('.news-categories__button').forEach(btn => {
-                btn.classList.remove('news-categories__button--active');
-                if (btn.dataset.category === category) {
-                    btn.classList.add('news-categories__button--active');
-                }
-            });
-            
-            const newsCards = document.querySelectorAll('.news-card');
-            newsCards.forEach(card => {
-                if (card.dataset.category === category) {
-                    card.style.display = 'flex';
-                    card.classList.add('news-card--highlight');
-                    setTimeout(() => card.classList.remove('news-card--highlight'), 2000);
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        // Переход по клику на карточку новости
-        document.querySelectorAll('.news-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const newsId = this.dataset.id;
-                openNewsModal(parseInt(newsId));
-            });
-        });
-
-        // Инициализация при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            // Проверяем сохраненные и прочитанные новости
-            document.querySelectorAll('.news-card').forEach(card => {
-                const newsId = card.dataset.id;
-                
-                if (localStorage.getItem(`news_${newsId}_read`) === 'true') {
-                    card.setAttribute('data-state', 'read');
-                }
-                
-                if (localStorage.getItem(`news_${newsId}_saved`) === 'true') {
-                    card.setAttribute('data-state', 'saved');
-                    const saveBtn = card.querySelector('.news-card__save-btn');
-                    if (saveBtn) {
-                        saveBtn.setAttribute('data-state', 'saved');
-                        saveBtn.innerHTML = '⭐';
-                    }
-                }
-            });
-            
-            // Переключение темы
-            const themeToggle = document.getElementById('themeToggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', function() {
-                    document.body.classList.toggle('dark-theme');
-                    localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
-                });
-                
-                // Восстанавливаем тему
-                const savedTheme = localStorage.getItem('theme');
-                if (savedTheme === 'dark') {
-                    document.body.classList.add('dark-theme');
-                }
-            }
         });
     </script>
 </body>
 </html>
-            
