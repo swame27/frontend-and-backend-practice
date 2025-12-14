@@ -11,12 +11,39 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     
-    <!-- Свои стили -->
-    <link rel="stylesheet" href="style/styles.css">
-    
     <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary-color: #f8f9fa;
+            --text-color: #212529;
+            --text-light: #6c757d;
+            --bg-color: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary-color: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary-color: #343a40;
+            --text-color: #e9ecef;
+            --text-light: #adb5bd;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --border-color: #495057;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
         .hero-section {
-            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
             color: white;
             padding: 80px 0;
             margin-bottom: 40px;
@@ -26,24 +53,92 @@
             width: 200px;
             height: 200px;
             object-fit: cover;
-            border: 5px solid #4361ee;
+            border: 5px solid var(--primary-color);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         
         .project-card {
             transition: all 0.3s ease;
             height: 100%;
+            background-color: var(--card-bg) !important;
+            border: 1px solid var(--border-color) !important;
         }
         
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2) !important;
+            box-shadow: 0 15px 30px var(--shadow-color) !important;
         }
         
         .skill-bar {
             height: 8px;
             border-radius: 4px;
             overflow: hidden;
+            background-color: var(--border-color);
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .card-header {
+            background-color: var(--secondary-color);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .bg-light {
+            background-color: var(--secondary-color) !important;
+            color: var(--text-color) !important;
+        }
+        
+        .btn-outline-primary {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        .text-muted {
+            color: var(--text-light) !important;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        .modal-header, .modal-footer {
+            border-color: var(--border-color);
+        }
+        
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        
+        .navbar-dark {
+            background-color: #212529 !important;
+        }
+        
+        [data-theme="dark"] .navbar-dark {
+            background-color: #1a1a1a !important;
+        }
+        
+        footer {
+            background-color: #212529 !important;
+        }
+        
+        [data-theme="dark"] footer {
+            background-color: #1a1a1a !important;
         }
         
         /* Анимация появления */
@@ -57,6 +152,75 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* Стили для переключателя темы */
+        .theme-toggle {
+            background: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Кастомные стили для форм и инпутов */
+        .form-control, .form-select {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: var(--card-bg);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+        
+        /* Прогресс бары */
+        .progress {
+            background-color: var(--border-color);
+        }
+        
+        /* Таблицы */
+        .table {
+            color: var(--text-color);
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(var(--primary-color), 0.1);
+        }
+        
+        /* Кастомные утилиты */
+        .border-bottom {
+            border-bottom-color: var(--border-color) !important;
+        }
+        
+        .border-top {
+            border-top-color: var(--border-color) !important;
+        }
+        
+        .border-start {
+            border-left-color: var(--border-color) !important;
+        }
+        
+        .border-end {
+            border-right-color: var(--border-color) !important;
+        }
+        
+        hr {
+            border-color: var(--border-color) !important;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
@@ -69,8 +233,10 @@
                     <p class="lead mb-4">Студент веб-разработчик. Создаю современные, адаптивные и функциональные веб-приложения</p>
                     <div class="d-flex align-items-center gap-3">
                         <span class="badge bg-light text-primary fs-6 p-2">ЭФБО-17-24</span>
-                        <button class="btn btn-light btn-sm" id="themeToggle">
-                            <i class="bi bi-moon"></i> Тема
+                        <button class="btn btn-light btn-sm d-flex align-items-center gap-2" id="themeToggle">
+                            <i class="bi bi-sun-fill d-none"></i>
+                            <i class="bi bi-moon-fill"></i>
+                            <span class="theme-text">Темная тема</span>
                         </button>
                     </div>
                 </div>
@@ -157,7 +323,6 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <!-- В секции профиля заменить кнопки скачивания резюме на это: -->
                                 <div class="col-md-6">
                                     <h5 class="h6 text-primary mb-3">
                                         <i class="bi bi-download me-2"></i>Резюме
@@ -599,9 +764,6 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Свои скрипты -->
-    <script src="script/main.js"></script>
-    
     <script>
         // Данные проектов
         const projects = {
@@ -722,6 +884,82 @@
             fadeElements.forEach(element => {
                 observer.observe(element);
             });
+        });
+        
+        // Управление темной темой
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = themeToggle.querySelector('.bi-sun-fill');
+            const moonIcon = themeToggle.querySelector('.bi-moon-fill');
+            const themeText = themeToggle.querySelector('.theme-text');
+            
+            // Проверяем сохраненную тему или системные настройки
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const currentTheme = savedTheme === 'auto' ? (prefersDark ? 'dark' : 'light') : savedTheme;
+            
+            // Устанавливаем начальную тему
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+            
+            // Обработчик переключения темы
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                updateThemeIcon(newTheme);
+            });
+            
+            // Обновление иконки темы
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    sunIcon.classList.remove('d-none');
+                    moonIcon.classList.add('d-none');
+                    themeText.textContent = 'Светлая тема';
+                } else {
+                    sunIcon.classList.add('d-none');
+                    moonIcon.classList.remove('d-none');
+                    themeText.textContent = 'Темная тема';
+                }
+            }
+            
+            // Слушаем изменения системной темы
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'auto' || !savedTheme) {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    updateThemeIcon(newTheme);
+                }
+            });
+            
+            // Функция для скачивания резюме
+            window.downloadResume = function(format) {
+                const fileName = format === 'pdf' ? 'resume.pdf' : 'resume.docx';
+                const message = format === 'pdf' 
+                    ? 'Начинается скачивание резюме в формате PDF' 
+                    : 'Начинается скачивание резюме в формате DOCX';
+                
+                alert(message);
+                
+                // В реальном проекте здесь будет реальное скачивание файла
+                console.log(`Скачивание файла: ${fileName}`);
+                
+                // Для демонстрации создаем и скачиваем текстовый файл
+                const content = `Резюме Блащенко Юрий Евгеньевич\n\nСпециальность: Веб-разработчик\nОпыт: 2 года\nКонтакты: student@example.com`;
+                const blob = new Blob([content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            };
         });
     </script>
 </body>
