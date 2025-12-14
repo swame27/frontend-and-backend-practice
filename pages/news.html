@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-bs-theme="light">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,161 +10,770 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary-color: #f8f9fa;
+            --text-color: #212529;
+            --text-light: #6c757d;
+            --bg-color: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary-color: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary-color: #343a40;
+            --text-color: #e9ecef;
+            --text-light: #adb5bd;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --border-color: #495057;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 40px;
+        }
+        
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
         .news-card {
             transition: all 0.4s ease;
             height: 100%;
             border: none;
             overflow: hidden;
+            background-color: var(--card-bg) !important;
+            border: 1px solid var(--border-color) !important;
         }
+        
         .news-card:hover {
             transform: translateY(-12px);
             box-shadow: 0 20px 40px rgba(67,97,238,0.2) !important;
         }
+        
         .news-card img {
             height: 200px;
             object-fit: cover;
             transition: transform 0.6s ease;
         }
+        
         .news-card:hover img {
             transform: scale(1.08);
         }
+        
         .badge-category {
             font-size: 0.75rem;
             padding: 0.4rem 0.8rem;
         }
+        
         .filter-btn {
             transition: all 0.3s ease;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background-color: transparent;
         }
+        
         .filter-btn.active {
-            background-color: var(--bs-primary) !important;
-            border-color: var(--bs-primary) !important;
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
             color: white !important;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .card-header {
+            background-color: var(--secondary-color);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .bg-light {
+            background-color: var(--secondary-color) !important;
+            color: var(--text-color) !important;
+        }
+        
+        .btn-outline-primary {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        .text-muted {
+            color: var(--text-light) !important;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        .modal-header, .modal-footer {
+            border-color: var(--border-color);
+        }
+        
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        
+        .navbar-dark {
+            background-color: #212529 !important;
+        }
+        
+        [data-theme="dark"] .navbar-dark {
+            background-color: #1a1a1a !important;
+        }
+        
+        footer {
+            background-color: #212529 !important;
+        }
+        
+        [data-theme="dark"] footer {
+            background-color: #1a1a1a !important;
+        }
+        
+        /* Анимация появления */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Стили для переключателя темы */
+        .theme-toggle {
+            background: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Кастомные стили для форм и инпутов */
+        .form-control, .form-select {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: var(--card-bg);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+        
+        /* Прогресс бары */
+        .progress {
+            background-color: var(--border-color);
+        }
+        
+        /* Таблицы */
+        .table {
+            color: var(--text-color);
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(var(--primary-color), 0.1);
+        }
+        
+        /* Кастомные утилиты */
+        .border-bottom {
+            border-bottom-color: var(--border-color) !important;
+        }
+        
+        .border-top {
+            border-top-color: var(--border-color) !important;
+        }
+        
+        .border-start {
+            border-left-color: var(--border-color) !important;
+        }
+        
+        .border-end {
+            border-right-color: var(--border-color) !important;
+        }
+        
+        hr {
+            border-color: var(--border-color) !important;
+            opacity: 0.5;
+        }
+        
+        /* Пагинация */
+        .page-link {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .page-link:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Хлебные крошки */
+        .breadcrumb {
+            background-color: var(--secondary-color);
+        }
+        
+        .breadcrumb-item.active {
+            color: var(--text-light);
         }
     </style>
 </head>
-<body class="bg-light">
-
+<body>
     <!-- Навигация -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="../index.html">
-                <i class="bi bi-newspaper me-2"></i> Digital Портфолио
+            <a class="navbar-brand d-lg-none" href="../index.html">
+                <i class="bi bi-code-slash"></i> Меню
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="nav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link" href="../index.html">Главная</a></li>
-                    <li class="nav-item"><a class="nav-link" href="practices.html">Практики</a></li>
-                    <li class="nav-item"><a class="nav-link" href="goods.html">Товары</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li>
-                    <li class="nav-item ms-3">
-                        <button class="btn btn-outline-light" id="themeToggle">
-                            <i class="bi bi-moon-stars"></i>
-                        </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav w-100 justify-content-evenly">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">
+                            <i class="bi bi-house-door me-1"></i> Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="news.html">
+                            <i class="bi bi-newspaper me-1"></i> Новости
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="practices.html">
+                            <i class="bi bi-laptop me-1"></i> Практики
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="goods.html">
+                            <i class="bi bi-cart3 me-1"></i> Товары
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacts.html">
+                            <i class="bi bi-telephone me-1"></i> Контакты
+                        </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <div class="bg-gradient text-white py-5" style="background: linear-gradient(135deg, #4361ee, #7209b7);">
-        <div class="container text-center py-5">
-            <h1 class="display-4 fw-bold">Новости и события</h1>
-            <p class="lead">Следите за жизнью курса «Фронтенд и бэкенд разработка»</p>
-            <p class="mb-0">ИПТИП • 1 семестр 2025/2026 • Преподаватель: Астафьев Р.У.</p>
-        </div>
-    </div>
-
-    <div class="container py-5">
-        <!-- Фильтры -->
-        <div class="text-center mb-5">
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-outline-primary filter-btn active" data-filter="all">Все</button>
-                <button type="button" class="btn btn-outline-primary filter-btn" data-filter="practice">Практики</button>
-                <button type="button" class="btn btn-outline-primary filter-btn" data-filter="event">Мероприятия</button>
-                <button type="button" class="btn btn-outline-primary filter-btn" data-filter="achievement">Достижения</button>
-            </div>
-        </div>
-
-        <!-- Сетка новостей -->
-        <div class="row g-4" id="newsGrid">
-            <!-- Новость 1 -->
-            <div class="col-lg-6 col-xxl-4 news-item" data-category="practice">
-                <div class="card news-card shadow-sm h-100">
-                    <img src="https://via.placeholder.com/600x400/4361ee/ffffff?text=Практика+№12" class="card-img-top" alt="Практика 12">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="badge bg-primary badge-category">Практика</span>
-                            <small class="text-muted">10 декабря 2025</small>
-                        </div>
-                        <h5 class="card-title">Сдана практика №12 — Bootstrap 5.3</h5>
-                        <p class="card-text text-muted">Полная переделка проекта на Bootstrap. Все компоненты заменены на нативные классы фреймворка.</p>
-                        <a href="#" class="mt-auto btn btn-outline-primary btn-sm">Читать →</a>
+    <!-- Hero секция -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-3">Новости и события</h1>
+                    <p class="lead mb-4">Следите за жизнью курса «Фронтенд и бэкенд разработка»</p>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="badge bg-light text-primary fs-6 p-2">ЭФБО-17-24</span>
+                        <button class="btn btn-light btn-sm d-flex align-items-center gap-2" id="themeToggle">
+                            <i class="bi bi-sun-fill d-none"></i>
+                            <i class="bi bi-moon-fill"></i>
+                            <span class="theme-text">Темная тема</span>
+                        </button>
                     </div>
                 </div>
-            </div>
-
-            <!-- Новость 2 -->
-            <div class="col-lg-6 col-xxl-4 news-item" data-category="achievement">
-                <div class="card news-card shadow-sm h-100">
-                    <img src="https://via.placeholder.com/600x400/2ecc71/ffffff?text=100%25" class="card-img-top" alt="100%">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="badge bg-success badge-category">Достижение</span>
-                            <small class="text-muted">8 декабря 2025</small>
-                        </div>
-                        <h5 class="card-title">11 из 13 практик сданы на 100%</h5>
-                        <p class="card-text text-muted">Осталось только доделать финальный проект — и можно на каникулы!</p>
-                        <a href="#" class="mt-auto btn btn-outline-success btn-sm">Подробнее →</a>
-                    </div>
+                <div class="col-lg-4 text-center mt-4 mt-lg-0">
+                    <i class="bi bi-newspaper" style="font-size: 8rem; color: rgba(255,255,255,0.8);"></i>
                 </div>
             </div>
-
-            <!-- Новость 3 -->
-            <div class="col-lg-6 col-xxl-4 news-item" data-category="event">
-                <div class="card news-card shadow-sm h-100">
-                    <img src="https://via.placeholder.com/600x400/f39c12/ffffff?text=Хакатон" class="card-img-top" alt="Хакатон">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="badge bg-warning badge-category">Мероприятие</span>
-                            <small class="text-muted">5 декабря 2025</small>
-                        </div>
-                        <h5 class="card-title">Участие в хакатоне РТУ МИРЭА</h5>
-                        <p class="card-text text-muted">Команда ЭФБО-17-24 заняла 3 место с проектом на React + Node.js</p>
-                        <a href="#" class="mt-auto btn btn-outline-warning btn-sm">Фотоотчёт →</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Добавь ещё 6–9 карточек сам — структура та же -->
         </div>
+    </section>
 
-        <!-- Пагинация -->
-        <nav aria-label="Пагинация новостей" class="mt-5">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled"><a class="page-link" href="#">« Назад</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Вперёд »</a></li>
-            </ul>
+    <!-- Хлебные крошки -->
+    <div class="container mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb py-3 px-3 rounded" style="background-color: var(--secondary-color);">
+                <li class="breadcrumb-item"><a href="../index.html" class="text-decoration-none">Главная</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Новости</li>
+            </ol>
         </nav>
     </div>
 
-    <!-- Bootstrap JS + Тема -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../scripts/theme-toggle.js"></script>
+    <main class="container my-5">
+        <!-- Фильтры новостей -->
+        <section class="mb-5 fade-in">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h3 class="h5 mb-0">
+                        <i class="bi bi-filter-circle me-2 text-primary"></i>
+                        Фильтр новостей
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <div class="btn-group flex-wrap" role="group">
+                            <button type="button" class="btn btn-outline-primary filter-btn active" data-filter="all">Все новости</button>
+                            <button type="button" class="btn btn-outline-primary filter-btn" data-filter="practice">Практики</button>
+                            <button type="button" class="btn btn-outline-success filter-btn" data-filter="achievement">Достижения</button>
+                            <button type="button" class="btn btn-outline-warning filter-btn" data-filter="event">Мероприятия</button>
+                            <button type="button" class="btn btn-outline-info filter-btn" data-filter="education">Обучение</button>
+                            <button type="button" class="btn btn-outline-danger filter-btn" data-filter="important">Важное</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <!-- Сетка новостей -->
+        <section class="fade-in">
+            <div class="row g-4" id="newsGrid">
+                <!-- Новость 1 -->
+                <div class="col-lg-6 col-xxl-4 news-item" data-category="practice">
+                    <div class="card news-card shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             class="card-img-top" alt="Практика 12">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-primary badge-category">Практика</span>
+                                <small class="text-muted">10 декабря 2025</small>
+                            </div>
+                            <h5 class="card-title">Сдана практика №12 — Bootstrap 5.3</h5>
+                            <p class="card-text text-muted">Полная переделка проекта на Bootstrap. Все компоненты заменены на нативные классы фреймворка.</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="showNewsModal(1)">
+                                    <i class="bi bi-eye me-1"></i>Читать подробнее
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Новость 2 -->
+                <div class="col-lg-6 col-xxl-4 news-item" data-category="achievement">
+                    <div class="card news-card shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             class="card-img-top" alt="Достижение">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-success badge-category">Достижение</span>
+                                <small class="text-muted">8 декабря 2025</small>
+                            </div>
+                            <h5 class="card-title">11 из 13 практик сданы на 100%</h5>
+                            <p class="card-text text-muted">Осталось только доделать финальный проект — и можно на каникулы!</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-outline-success btn-sm w-100" onclick="showNewsModal(2)">
+                                    <i class="bi bi-eye me-1"></i>Читать подробнее
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Новость 3 -->
+                <div class="col-lg-6 col-xxl-4 news-item" data-category="event">
+                    <div class="card news-card shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             class="card-img-top" alt="Хакатон">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-warning badge-category">Мероприятие</span>
+                                <small class="text-muted">5 декабря 2025</small>
+                            </div>
+                            <h5 class="card-title">Участие в хакатоне РТУ МИРЭА</h5>
+                            <p class="card-text text-muted">Команда ЭФБО-17-24 заняла 3 место с проектом на React + Node.js</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-outline-warning btn-sm w-100" onclick="showNewsModal(3)">
+                                    <i class="bi bi-eye me-1"></i>Читать подробнее
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Новость 4 -->
+                <div class="col-lg-6 col-xxl-4 news-item" data-category="education">
+                    <div class="card news-card shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             class="card-img-top" alt="Мастер-класс">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-info badge-category">Обучение</span>
+                                <small class="text-muted">3 декабря 2025</small>
+                            </div>
+                            <h5 class="card-title">Мастер-класс по TypeScript</h5>
+                            <p class="card-text text-muted">Провели открытый урок по TypeScript для студентов младших курсов</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-outline-info btn-sm w-100" onclick="showNewsModal(4)">
+                                    <i class="bi bi-eye me-1"></i>Читать подробнее
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Новость 5 -->
+                <div class="col-lg-6 col-xxl-4 news-item" data-category="important">
+                    <div class="card news-card shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             class="card-img-top" alt="Расписание">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-danger badge-category">Важное</span>
+                                <small class="text-muted">1 декабря 2025</small>
+                            </div>
+                            <h5 class="card-title">Изменения в расписании</h5>
+                            <p class="card-text text-muted">С 15 декабря изменяется расписание занятий по веб-разработке</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-outline-danger btn-sm w-100" onclick="showNewsModal(5)">
+                                    <i class="bi bi-eye me-1"></i>Читать подробнее
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Новость 6 -->
+                <div class="col-lg-6 col-xxl-4 news-item" data-category="practice">
+                    <div class="card news-card shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             class="card-img-top" alt="Новый проект">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-primary badge-category">Практика</span>
+                                <small class="text-muted">28 ноября 2025</small>
+                            </div>
+                            <h5 class="card-title">Запуск нового проекта портфолио</h5>
+                            <p class="card-text text-muted">Полностью переработан и обновлен сайт портфолио с темной темой</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="showNewsModal(6)">
+                                    <i class="bi bi-eye me-1"></i>Читать подробнее
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Пагинация -->
+            <nav aria-label="Пагинация новостей" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled"><a class="page-link" href="#">« Назад</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Вперёд »</a></li>
+                </ul>
+            </nav>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="h6 mb-3">
+                        <i class="bi bi-code-slash me-2"></i>Digital Портфолио
+                    </h5>
+                    <p class="small text-muted mb-0">
+                        Сайт-портфолио студента веб-разработчика. 
+                        Демонстрация проектов, навыков и учебных материалов.
+                    </p>
+                </div>
+                
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="h6 mb-3">Быстрые ссылки</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul class="list-unstyled small">
+                                <li class="mb-2"><a href="../index.html" class="text-white text-decoration-none">Главная</a></li>
+                                <li class="mb-2"><a href="practices.html" class="text-white text-decoration-none">Проекты</a></li>
+                                <li class="mb-2"><a href="news.html" class="text-white text-decoration-none">Новости</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul class="list-unstyled small">
+                                <li class="mb-2"><a href="practices.html" class="text-white text-decoration-none">Практики</a></li>
+                                <li class="mb-2"><a href="goods.html" class="text-white text-decoration-none">Товары</a></li>
+                                <li class="mb-2"><a href="contacts.html" class="text-white text-decoration-none">Контакты</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <h5 class="h6 mb-3">Контакты</h5>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2">
+                            <i class="bi bi-envelope me-2"></i>
+                            <a href="mailto:student@example.com" class="text-white text-decoration-none">student@example.com</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-github me-2"></i>
+                            <a href="https://github.com/swame27" class="text-white text-decoration-none">github.com/swame27</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-telegram me-2"></i>
+                            <a href="#" class="text-white text-decoration-none">@yuri_blashchenko</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4 border-secondary">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 small">&copy; 2024 Digital Портфолио. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="contacts.html" class="text-white text-decoration-none me-3 small">Контакты</a>
+                    <a href="#" class="text-white text-decoration-none small">Политика конфиденциальности</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно новости -->
+    <div class="modal fade" id="newsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newsModalTitle">Заголовок новости</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="newsModalBody">
+                    <!-- Контент будет добавляться через JS -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
+        // Данные новостей
+        const news = {
+            1: {
+                title: "Сдана практика №12 — Bootstrap 5.3",
+                category: "Практика",
+                date: "10 декабря 2025",
+                image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                content: `
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 class="img-fluid rounded" alt="Практика 12">
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-primary mb-3">Детали практики</h6>
+                            <p>В рамках практики №12 была выполнена полная переделка проекта на Bootstrap 5.3. Все кастомные компоненты были заменены на нативные классы фреймворка.</p>
+                            
+                            <h6 class="text-primary mt-4 mb-3">Что было сделано:</h6>
+                            <ul>
+                                <li>Переработана система навигации</li>
+                                <li>Добавлены модальные окна</li>
+                                <li>Реализована адаптивная сетка</li>
+                                <li>Добавлены анимации и переходы</li>
+                                <li>Улучшена доступность</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h6 class="text-primary mb-3">Используемые технологии:</h6>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge bg-primary">Bootstrap 5.3</span>
+                            <span class="badge bg-primary">HTML5</span>
+                            <span class="badge bg-success">JavaScript</span>
+                            <span class="badge bg-info">CSS3</span>
+                        </div>
+                        
+                        <p class="mb-0"><strong>Оценка:</strong> 100/100 баллов</p>
+                        <p><strong>Преподаватель:</strong> Астафьев Р.У.</p>
+                    </div>
+                `
+            },
+            2: {
+                title: "11 из 13 практик сданы на 100%",
+                category: "Достижение",
+                date: "8 декабря 2025",
+                image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                content: `
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 class="img-fluid rounded" alt="Достижение">
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-primary mb-3">Отличные результаты</h6>
+                            <p>На данный момент из 13 запланированных практических работ 11 уже сданы на максимальный балл. Это отличный результат, показывающий высокий уровень подготовки.</p>
+                            
+                            <h6 class="text-primary mt-4 mb-3">Статистика по практикам:</h6>
+                            <ul>
+                                <li>Практика 1-6: 100 баллов</li>
+                                <li>Практика 7-11: 100 баллов</li>
+                                <li>Практика 12: 100 баллов</li>
+                                <li>Практика 13: В процессе</li>
+                                <li>Финальный проект: В разработке</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <div class="alert alert-success">
+                            <i class="bi bi-trophy me-2"></i>
+                            <strong>Отличная работа!</strong> Продолжайте в том же духе для успешного завершения семестра.
+                        </div>
+                    </div>
+                `
+            },
+            3: {
+                title: "Участие в хакатоне РТУ МИРЭА",
+                category: "Мероприятие",
+                date: "5 декабря 2025",
+                image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                content: `
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 class="img-fluid rounded" alt="Хакатон">
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-primary mb-3">Хакатон РТУ МИРЭА</h6>
+                            <p>Команда группы ЭФБО-17-24 успешно выступила на университетском хакатоне, заняв почетное 3 место среди 25 команд-участниц.</p>
+                            
+                            <h6 class="text-primary mt-4 mb-3">Детали проекта:</h6>
+                            <ul>
+                                <li><strong>Проект:</strong> Система управления студенческими проектами</li>
+                                <li><strong>Технологии:</strong> React + Node.js + MongoDB</li>
+                                <li><strong>Время разработки:</strong> 48 часов</li>
+                                <li><strong>Команда:</strong> 3 человека</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <div class="alert alert-warning">
+                            <i class="bi bi-award me-2"></i>
+                            <strong>3 место!</strong> Отличный результат для первого участия в хакатоне.
+                        </div>
+                    </div>
+                `
+            },
+            4: {
+                title: "Мастер-класс по TypeScript",
+                category: "Обучение",
+                date: "3 декабря 2025",
+                image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                content: "Содержимое новости 4..."
+            },
+            5: {
+                title: "Изменения в расписании",
+                category: "Важное",
+                date: "1 декабря 2025",
+                image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                content: "Содержимое новости 5..."
+            },
+            6: {
+                title: "Запуск нового проекта портфолио",
+                category: "Практика",
+                date: "28 ноября 2025",
+                image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                content: "Содержимое новости 6..."
+            }
+        };
+        
+        // Функция показа модального окна новости
+        window.showNewsModal = function(newsId) {
+            const newsItem = news[newsId];
+            if (!newsItem) return;
+            
+            document.getElementById('newsModalTitle').textContent = newsItem.title;
+            
+            const modalBody = document.getElementById('newsModalBody');
+            modalBody.innerHTML = `
+                <div class="mb-3">
+                    <span class="badge bg-${getCategoryColor(newsItem.category)} me-2">${newsItem.category}</span>
+                    <small class="text-muted">${newsItem.date}</small>
+                </div>
+                ${newsItem.content}
+            `;
+            
+            // Показываем модальное окно
+            const modal = new bootstrap.Modal(document.getElementById('newsModal'));
+            modal.show();
+        };
+        
+        function getCategoryColor(category) {
+            switch(category) {
+                case 'Практика': return 'primary';
+                case 'Достижение': return 'success';
+                case 'Мероприятие': return 'warning';
+                case 'Обучение': return 'info';
+                case 'Важное': return 'danger';
+                default: return 'secondary';
+            }
+        }
+        
         // Фильтрация новостей
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-
+        
                 const filter = this.getAttribute('data-filter');
                 document.querySelectorAll('.news-item').forEach(item => {
                     if (filter === 'all' || item.getAttribute('data-category') === filter) {
@@ -173,6 +782,77 @@
                         item.style.display = 'none';
                     }
                 });
+            });
+        });
+        
+        // Анимация появления при скролле
+        window.addEventListener('DOMContentLoaded', () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+        
+        // Управление темной темой
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = themeToggle.querySelector('.bi-sun-fill');
+            const moonIcon = themeToggle.querySelector('.bi-moon-fill');
+            const themeText = themeToggle.querySelector('.theme-text');
+            
+            // Проверяем сохраненную тему или системные настройки
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const currentTheme = savedTheme === 'auto' ? (prefersDark ? 'dark' : 'light') : savedTheme;
+            
+            // Устанавливаем начальную тему
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+            
+            // Обработчик переключения темы
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                updateThemeIcon(newTheme);
+            });
+            
+            // Обновление иконки темы
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    sunIcon.classList.remove('d-none');
+                    moonIcon.classList.add('d-none');
+                    themeText.textContent = 'Светлая тема';
+                } else {
+                    sunIcon.classList.add('d-none');
+                    moonIcon.classList.remove('d-none');
+                    themeText.textContent = 'Темная тема';
+                }
+            }
+            
+            // Слушаем изменения системной темы
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'auto' || !savedTheme) {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    updateThemeIcon(newTheme);
+                }
             });
         });
     </script>
