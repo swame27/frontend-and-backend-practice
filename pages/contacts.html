@@ -1,211 +1,254 @@
 <!DOCTYPE html>
-<html lang="ru" data-bs-theme="light">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Контакты — Digital Портфолио</title>
 
-    <!-- Bootstrap 5.3 + Icons -->
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <style>
-        .contact-card {
-            transition: all 0.4s ease;
+        /* ====== ТЕМА (как на главной) ====== */
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary-color: #f8f9fa;
+            --text-color: #212529;
+            --text-light: #6c757d;
+            --bg-color: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+            --shadow-color: rgba(0, 0, 0, 0.1);
         }
+
+        [data-theme="dark"] {
+            --secondary-color: #343a40;
+            --text-color: #e9ecef;
+            --text-light: #adb5bd;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --border-color: #495057;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: 0.3s ease;
+        }
+
+        /* ====== UI ====== */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            transition: all .3s ease;
+        }
+
         .contact-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(67,97,238,0.2) !important;
         }
-        .dialog-custom {
-            max-width: 500px;
-            border: none;
-            border-radius: 1rem;
-            padding: 0;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+
+        .navbar-dark {
+            background-color: #212529 !important;
         }
-        .dialog-custom::backdrop {
-            background: rgba(0,0,0,0.6);
+
+        [data-theme="dark"] .navbar-dark {
+            background-color: #1a1a1a !important;
         }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: #fff;
+            padding: 80px 0;
+        }
+
+        .form-control, .form-select {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 .25rem rgba(67,97,238,.25);
+        }
+
         .map-placeholder {
             height: 400px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             border-radius: 1rem;
+            background: var(--secondary-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            color: #6c757d;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        /* ====== dialog ====== */
+        dialog {
+            border: none;
+            border-radius: 1rem;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        dialog::backdrop {
+            background: rgba(0,0,0,.6);
         }
     </style>
 </head>
-<body class="bg-light">
 
-    <!-- Навигация -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="../index.html">
-                Digital Портфолио
-            </a>
-            <div class="d-flex align-items-center gap-3">
-                <button class="btn btn-outline-light" id="themeToggle">
-                    <i class="bi bi-moon-stars"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
+<body>
 
-    <!-- Hero -->
-    <div class="bg-primary text-white py-5 text-center">
-        <div class="container">
-            <h1 class="display-5 fw-bold">Свяжитесь со мной</h1>
-            <p class="lead">Готов к сотрудничеству, стажировкам и новым проектам</p>
-        </div>
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="../index.html">Digital Портфолио</a>
+        <button class="btn btn-outline-light" id="themeToggle">
+            <i class="bi bi-moon-fill"></i>
+            <i class="bi bi-sun-fill d-none"></i>
+        </button>
     </div>
+</nav>
 
-    <div class="container py-5">
-        <div class="row g-5">
-            <!-- Контактная информация -->
-            <div class="col-lg-5">
-                <div class="card contact-card shadow-sm h-100">
-                    <div class="card-body p-4">
-                        <h3 class="h5 mb-4 text-primary">Мои контакты</h3>
-                        
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width:50px;height:50px;">
-                                <i class="bi bi-person-fill fs-4"></i>
+<!-- ===== HERO ===== -->
+<section class="hero text-center">
+    <div class="container">
+        <h1 class="display-5 fw-bold">Свяжитесь со мной</h1>
+        <p class="lead">Сотрудничество, стажировки и проекты</p>
+    </div>
+</section>
+
+<main class="container py-5">
+    <div class="row g-5">
+
+        <!-- Контакты -->
+        <div class="col-lg-5">
+            <div class="card contact-card h-100">
+                <div class="card-body p-4">
+                    <h3 class="h5 text-primary mb-4">Мои контакты</h3>
+
+                    <p><strong>Юрий Блащенко</strong><br>
+                        <small class="text-muted">ЭФБО-17-24</small>
+                    </p>
+
+                    <p><i class="bi bi-envelope me-2"></i>
+                        <a href="mailto:yura.blashchenko@mail.ru">yura.blashchenko@mail.ru</a>
+                    </p>
+
+                    <p><i class="bi bi-telegram me-2"></i>
+                        <a href="https://t.me/swame27">@swame27</a>
+                    </p>
+
+                    <p><i class="bi bi-geo-alt me-2"></i>Москва, Россия</p>
+
+                    <button class="btn btn-primary w-100 mt-3"
+                            onclick="document.getElementById('callDialog').showModal()">
+                        Заказать звонок
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Форма -->
+        <div class="col-lg-7">
+            <div class="card mb-4">
+                <div class="card-body p-4">
+                    <h3 class="h5 text-primary mb-4">Напишите мне</h3>
+
+                    <form id="contactForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input class="form-control" placeholder="Имя" required>
                             </div>
-                            <div>
-                                <strong>Юрий Блащенко</strong><br>
-                                <small class="text-muted">Студент-разработчик • ЭФБО-17-24</small>
+                            <div class="col-md-6">
+                                <input class="form-control" type="email" placeholder="Email" required>
+                            </div>
+                            <div class="col-12">
+                                <select class="form-select">
+                                    <option>Сотрудничество</option>
+                                    <option>Стажировка</option>
+                                    <option>Заказ сайта</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <textarea class="form-control" rows="5"
+                                          placeholder="Сообщение" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary btn-lg">Отправить</button>
                             </div>
                         </div>
-
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="bi bi-envelope-fill text-primary fs-5 me-3"></i>
-                            <a href="mailto:yura.blashchenko@mail.ru" class="text-decoration-none">yura.blashchenko@mail.ru</a>
-                        </div>
-
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="bi bi-telegram text-primary fs-5 me-3"></i>
-                            <a href="https://t.me/yuriy_blash" class="text-decoration-none">@swame27</a>
-                        </div>
-
-                        <div class="d-flex align-items-center mb-4">
-                            <i class="bi bi-geo-alt-fill text-primary fs-5 me-3"></i>
-                            <span>Москва, Россия</span>
-                        </div>
-
-                        <button class="btn btn-primary w-100" onclick="document.getElementById('callDialog').showModal()">
-                            Заказать звонок
-                        </button>
-                    </div>
+                    </form>
                 </div>
             </div>
 
-            <!-- Форма обратной связи -->
-            <div class="col-lg-7">
-                <div class="card shadow-sm">
-                    <div class="card-body p-4">
-                        <h3 class="h5 mb-4 text-primary">Напишите мне</h3>
-                        <form id="contactForm">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Ваше имя *</label>
-                                    <input type="text" class="form-control" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Email *</label>
-                                    <input type="email" class="form-control" required>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label">Тема сообщения</label>
-                                    <select class="form-select">
-                                        <option>Сотрудничество</option>
-                                        <option>Стажировка</option>
-                                        <option>Заказ сайта</option>
-                                        <option>Просто познакомиться</option>
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label">Сообщение *</label>
-                                    <textarea class="form-control" rows="6" required placeholder="Расскажите, чем могу помочь..."></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary btn-lg px-5">
-                                        Отправить сообщение
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Карта -->
-                <div class="mt-4">
-                    <div class="map-placeholder shadow-sm">
-                        <div class="text-center">
-                            <p>г. Москва<br>просп. Вернадского, 86</p>
-                            <p class="text-muted small">РТУ МИРЭА • ИПТИП</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="map-placeholder">
+                г. Москва<br>пр-т Вернадского, 86<br>
+                <small>РТУ МИРЭА</small>
             </div>
         </div>
     </div>
+</main>
 
-    <!-- НАТИВНЫЙ <dialog> — Практика №10 -->
-    <dialog id="callDialog" class="dialog-custom">
-        <div class="card border-0">
-            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Заказать обратный звонок</h5>
-                <button class="btn-close btn-close-white" onclick="document.getElementById('callDialog').close()"></button>
+<!-- ===== DIALOG ===== -->
+<dialog id="callDialog">
+    <div class="p-4">
+        <h5 class="text-primary mb-3">Обратный звонок</h5>
+        <form id="callForm">
+            <input class="form-control mb-3" placeholder="Имя" required>
+            <input class="form-control mb-3" placeholder="Телефон" required>
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary flex-fill">Жду звонка</button>
+                <button type="button" class="btn btn-outline-secondary"
+                        onclick="callDialog.close()">Отмена</button>
             </div>
-            <div class="card-body p-4">
-                <form id="callForm">
-                    <div class="mb-3">
-                        <label class="form-label">Ваше имя</label>
-                        <input type="text" class="form-control" placeholder="Иван Иванов" required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label">Телефон *</label>
-                        <input type="tel" class="form-control" placeholder="+7 (999) 123-45-67" required>
-                    </div>
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary flex-fill">Жду звонка!</button>
-                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('callDialog').close()">
-                            Отмена
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </dialog>
+        </form>
+    </div>
+</dialog>
 
-    <!-- Bootstrap JS + Тема -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../scripts/theme-toggle.js"></script>
+<!-- ===== JS ===== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        // Отправка формы контактов
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Спасибо! Сообщение отправлено. Я свяжусь с вами в ближайшее время');
-            this.reset();
-        });
+<script>
+    // === тема (единая с главной) ===
+    const toggle = document.getElementById('themeToggle');
+    const sun = toggle.querySelector('.bi-sun-fill');
+    const moon = toggle.querySelector('.bi-moon-fill');
 
-        // Заказ звонка
-        document.getElementById('callForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Отлично! Я перезвоню вам в течение часа');
-            document.getElementById('callDialog').close();
-            this.reset();
-        });
+    const saved = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', saved);
+    update(saved);
 
-        // Закрытие диалога по Esc и клику на фон
-        document.getElementById('callDialog').addEventListener('click', function(e) {
-            if (e.target === this) this.close();
-        });
-    </script>
+    toggle.onclick = () => {
+        const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem('theme', next);
+        update(next);
+    };
+
+    function update(theme) {
+        sun.classList.toggle('d-none', theme === 'light');
+        moon.classList.toggle('d-none', theme === 'dark');
+    }
+
+    // формы
+    contactForm.onsubmit = e => {
+        e.preventDefault();
+        alert('Сообщение отправлено');
+        contactForm.reset();
+    };
+
+    callForm.onsubmit = e => {
+        e.preventDefault();
+        alert('Я перезвоню вам!');
+        callDialog.close();
+        callForm.reset();
+    };
+</script>
 </body>
 </html>
