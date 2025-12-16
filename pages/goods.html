@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-bs-theme="light">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,145 +10,593 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary-color: #f8f9fa;
+            --text-color: #212529;
+            --text-light: #6c757d;
+            --bg-color: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --success-color: #2ecc71;
+        }
+        
+        [data-theme="dark"] {
+            --primary-color: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary-color: #343a40;
+            --text-color: #e9ecef;
+            --text-light: #adb5bd;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --border-color: #495057;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --success-color: #27ae60;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 40px;
+        }
+        
         .product-card {
             transition: all 0.4s ease;
             height: 100%;
-            border: none;
+            background-color: var(--card-bg) !important;
+            border: 1px solid var(--border-color) !important;
         }
+        
         .product-card:hover {
             transform: translateY(-12px);
             box-shadow: 0 20px 40px rgba(67,97,238,0.25) !important;
         }
+        
         .product-card img {
             height: 200px;
             object-fit: cover;
         }
+        
         .price {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #4361ee;
+            color: var(--primary-color);
         }
+        
         .old-price {
             text-decoration: line-through;
-            color: #6c757d;
+            color: var(--text-light);
         }
+        
         .cart-badge {
             position: absolute;
             top: -8px;
             right: -8px;
             font-size: 0.75rem;
         }
+        
         .filter-btn.active {
-            background-color: #4361ee !important;
-            border-color: #4361ee !important;
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
             color: white !important;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .card-header {
+            background-color: var(--secondary-color);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .bg-light {
+            background-color: var(--secondary-color) !important;
+            color: var(--text-color) !important;
+        }
+        
+        .btn-outline-primary {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        .text-muted {
+            color: var(--text-light) !important;
+        }
+        
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        
+        .navbar-dark {
+            background-color: #212529 !important;
+        }
+        
+        [data-theme="dark"] .navbar-dark {
+            background-color: #1a1a1a !important;
+        }
+        
+        footer {
+            background-color: #212529 !important;
+        }
+        
+        [data-theme="dark"] footer {
+            background-color: #1a1a1a !important;
+        }
+        
+        /* Анимация появления */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Стили для переключателя темы */
+        .theme-toggle {
+            background: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Формы */
+        .form-control, .form-select {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: var(--card-bg);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+        
+        /* Кастомные утилиты */
+        hr {
+            border-color: var(--border-color) !important;
+            opacity: 0.5;
+        }
+        
+        /* Хлебные крошки */
+        .breadcrumb {
+            background-color: var(--secondary-color);
+        }
+        
+        .breadcrumb-item.active {
+            color: var(--text-light);
+        }
+        
+        /* Offcanvas корзина */
+        .offcanvas {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        
+        .offcanvas-header {
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .offcanvas-footer {
+            border-top: 1px solid var(--border-color);
+            background-color: var(--secondary-color);
         }
     </style>
 </head>
-<body class="bg-light">
-
+<body>
     <!-- Навигация -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="../index.html">
-                <i class="bi bi-cart4 me-2"></i> Digital Shop
+            <a class="navbar-brand d-lg-none" href="../index.html">
+                <i class="bi bi-code-slash"></i> Меню
             </a>
-            <button class="d-flex align-items-center gap-3">
-                <div class="position-relative">
-                    <button class="btn btn-light" id="cartBtn">
-                        <i class="bi bi-cart3"></i>
-                        <span class="badge bg-danger rounded-pill cart-badge" id="cartCount">0</span>
-                    </button>
-                </div>
-                <button class="btn btn-outline-light" id="themeToggle">
-                    <i class="bi bi-moon-stars"></i>
-                </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav w-100 justify-content-evenly">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">
+                            <i class="bi bi-house-door me-1"></i> Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="news.html">
+                            <i class="bi bi-newspaper me-1"></i> Новости
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="practices.html">
+                            <i class="bi bi-laptop me-1"></i> Практики
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="goods.html">
+                            <i class="bi bi-cart3 me-1"></i> Товары
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacts.html">
+                            <i class="bi bi-telephone me-1"></i> Контакты
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <div class="bg-primary text-white py-5 text-center">
+    <!-- Hero секция -->
+    <section class="hero-section">
         <div class="container">
-            <h1 class="display-5 fw-bold">Магазин цифровых товаров</h1>
-            <p class="lead">Шаблоны сайтов • Курсы • UI-киты • Плагины</p>
-        </div>
-    </div>
-
-    <div class="container py-5">
-        <!-- Фильтры + Поиск -->
-        <div class="row mb-4">
-            <div class="col-lg-8">
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-outline-primary filter-btn active" data-filter="all">Все товары</button>
-                    <button type="button" class="btn btn-outline-primary filter-btn" data-filter="template">Шаблоны</button>
-                    <button type="button" class="btn btn-outline-primary filter-btn" data-filter="course">Курсы</button>
-                    <button type="button" class="btn btn-outline-primary filter-btn" data-filter="plugin">Плагины</button>
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-3">Магазин цифровых товаров</h1>
+                    <p class="lead mb-4">Шаблоны сайтов • Курсы • UI-киты • Плагины для разработчиков</p>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="badge bg-light text-primary fs-6 p-2">ЭФБО-17-24</span>
+                        <button class="btn btn-light btn-sm d-flex align-items-center gap-2" id="themeToggle">
+                            <i class="bi bi-sun-fill d-none"></i>
+                            <i class="bi bi-moon-fill"></i>
+                            <span class="theme-text">Темная тема</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center mt-4 mt-lg-0">
+                    <i class="bi bi-cart4" style="font-size: 8rem; color: rgba(255,255,255,0.8);"></i>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Поиск товаров...">
-                    <button class="btn btn-primary" id="searchBtn">
-                        <i class="bi bi-search"></i>
-                    </button>
+        </div>
+    </section>
+
+    <!-- Хлебные крошки -->
+    <div class="container mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb py-3 px-3 rounded" style="background-color: var(--secondary-color);">
+                <li class="breadcrumb-item"><a href="../index.html" class="text-decoration-none">Главная</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Товары</li>
+            </ol>
+        </nav>
+    </div>
+
+    <main class="container my-5">
+        <!-- Фильтры + Поиск -->
+        <section class="mb-5 fade-in">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h3 class="h5 mb-0">
+                        <i class="bi bi-filter-circle text-primary me-2"></i>
+                        Фильтр и поиск товаров
+                    </h3>
                 </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-8 mb-3 mb-lg-0">
+                            <div class="btn-group flex-wrap" role="group">
+                                <button type="button" class="btn btn-outline-primary filter-btn active" data-filter="all">
+                                    Все товары
+                                </button>
+                                <button type="button" class="btn btn-outline-primary filter-btn" data-filter="template">
+                                    Шаблоны сайтов
+                                </button>
+                                <button type="button" class="btn btn-outline-success filter-btn" data-filter="course">
+                                    Курсы
+                                </button>
+                                <button type="button" class="btn btn-outline-warning filter-btn" data-filter="plugin">
+                                    Плагины
+                                </button>
+                                <button type="button" class="btn btn-outline-info filter-btn" data-filter="kit">
+                                    UI-киты
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="searchInput" placeholder="Поиск товаров...">
+                                <button class="btn btn-primary" id="searchBtn">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Корзина кнопка -->
+        <div class="d-flex justify-content-end mb-4 fade-in">
+            <div class="position-relative">
+                <button class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                    <i class="bi bi-cart3"></i>
+                    Корзина
+                    <span class="badge bg-light text-primary" id="cartCount">0</span>
+                </button>
             </div>
         </div>
 
         <!-- Сетка товаров -->
-        <div class="row g-4" id="productsGrid">
-            <!-- Товар 1 -->
-            <div class="col-lg-4 col-md-6 product-item" data-category="template">
-                <div class="card product-card shadow-sm h-100">
-                    <img src="https://via.placeholder.com/600x400/4361ee/ffffff?text=Portfolio+Template" class="card-img-top" alt="Шаблон портфолио">
-                    <div class="card-body d-flex flex-column">
-                        <span class="badge bg-primary mb-2">Шаблон</span>
-                        <h5 class="card-title">Портфолио разработчика 2025</h5>
-                        <p class="card-text text-muted">Адаптивный шаблон с тёмной темой и анимациями</p>
-                        <div class="mt-auto">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div>
-                                    <span class="price">1 990 ₽</span>
-                                    <span class="old-price ms-2">3 990 ₽</span>
+        <section class="fade-in">
+            <div class="row g-4" id="productsGrid">
+                <!-- Товар 1 - Шаблон портфолио -->
+                <div class="col-lg-4 col-md-6 product-item" data-category="template">
+                    <div class="card product-card shadow-sm h-100">
+                        <img src="images/project1.jpg" class="card-img-top" alt="Шаблон портфолио"
+                             onerror="this.src='https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">Шаблон сайта</span>
+                            <h5 class="card-title h6">Адаптивный шаблон портфолио</h5>
+                            <p class="card-text text-muted small">Современный шаблон с темной темой, анимациями и полной адаптивностью</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <span class="price">1 990 ₽</span>
+                                        <span class="old-price ms-2">3 990 ₽</span>
+                                    </div>
+                                    <span class="text-success"><i class="bi bi-star-fill"></i> 4.9</span>
                                 </div>
-                                <span class="text-success"><i class="bi bi-star-fill"></i> 4.9</span>
+                                <button class="btn btn-primary w-100 add-to-cart" 
+                                        data-id="1" 
+                                        data-name="Адаптивный шаблон портфолио" 
+                                        data-price="1990">
+                                    <i class="bi bi-cart-plus me-2"></i>В корзину
+                                </button>
                             </div>
-                            <button class="btn btn-primary w-100 add-to-cart" data-id="1" data-name="Портфолио 2025" data-price="1990">
-                                В корзину
-                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 2 - Курс по React -->
+                <div class="col-lg-4 col-md-6 product-item" data-category="course">
+                    <div class="card product-card shadow-sm h-100">
+                        <img src="images/project2.jpg" class="card-img-top" alt="Курс React"
+                             onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-success mb-2">Видео-курс</span>
+                            <h5 class="card-title h6">React с нуля до Pro</h5>
+                            <p class="card-text text-muted small">Полный курс по React: 30+ часов видео, 5 проектов, сертификат</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <span class="price">7 990 ₽</span>
+                                    </div>
+                                    <span class="text-success"><i class="bi bi-star-fill"></i> 4.8</span>
+                                </div>
+                                <button class="btn btn-success w-100 add-to-cart" 
+                                        data-id="2" 
+                                        data-name="Курс React с нуля до Pro" 
+                                        data-price="7990">
+                                    <i class="bi bi-cart-plus me-2"></i>В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 3 - Интернет-магазин шаблон -->
+                <div class="col-lg-4 col-md-6 product-item" data-category="template">
+                    <div class="card product-card shadow-sm h-100">
+                        <img src="images/project3.jpg" class="card-img-top" alt="Шаблон интернет-магазина"
+                             onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">Шаблон сайта</span>
+                            <h5 class="card-title h6">Интернет-магазин на React</h5>
+                            <p class="card-text text-muted small">Полнофункциональный шаблон с корзиной, фильтрацией и оплатой</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <span class="price">3 490 ₽</span>
+                                        <span class="old-price ms-2">5 990 ₽</span>
+                                    </div>
+                                    <span class="text-success"><i class="bi bi-star-fill"></i> 4.7</span>
+                                </div>
+                                <button class="btn btn-primary w-100 add-to-cart" 
+                                        data-id="3" 
+                                        data-name="Интернет-магазин на React" 
+                                        data-price="3490">
+                                    <i class="bi bi-cart-plus me-2"></i>В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 4 - Плагин Bootstrap -->
+                <div class="col-lg-4 col-md-6 product-item" data-category="plugin">
+                    <div class="card product-card shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             class="card-img-top" alt="Плагин Bootstrap">
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-warning mb-2">Плагин</span>
+                            <h5 class="card-title h6">Advanced Bootstrap Components</h5>
+                            <p class="card-text text-muted small">Коллекция из 50+ продвинутых компонентов для Bootstrap 5</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <span class="price">2 490 ₽</span>
+                                    </div>
+                                    <span class="text-success"><i class="bi bi-star-fill"></i> 4.6</span>
+                                </div>
+                                <button class="btn btn-warning w-100 add-to-cart" 
+                                        data-id="4" 
+                                        data-name="Advanced Bootstrap Components" 
+                                        data-price="2490">
+                                    <i class="bi bi-cart-plus me-2"></i>В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 5 - UI-кит Dashboard -->
+                <div class="col-lg-4 col-md-6 product-item" data-category="kit">
+                    <div class="card product-card shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             class="card-img-top" alt="UI-кит Dashboard">
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-info mb-2">UI-кит</span>
+                            <h5 class="card-title h6">Modern Dashboard UI Kit</h5>
+                            <p class="card-text text-muted small">Полный набор компонентов для создания современных дашбордов</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <span class="price">4 990 ₽</span>
+                                        <span class="old-price ms-2">7 990 ₽</span>
+                                    </div>
+                                    <span class="text-success"><i class="bi bi-star-fill"></i> 4.9</span>
+                                </div>
+                                <button class="btn btn-info w-100 add-to-cart" 
+                                        data-id="5" 
+                                        data-name="Modern Dashboard UI Kit" 
+                                        data-price="4990">
+                                    <i class="bi bi-cart-plus me-2"></i>В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 6 - Курс JavaScript -->
+                <div class="col-lg-4 col-md-6 product-item" data-category="course">
+                    <div class="card product-card shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             class="card-img-top" alt="Курс JavaScript">
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-success mb-2">Видео-курс</span>
+                            <h5 class="card-title h6">JavaScript от Junior до Senior</h5>
+                            <p class="card-text text-muted small">Углубленный курс по современному JavaScript и TypeScript</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <span class="price">6 990 ₽</span>
+                                    </div>
+                                    <span class="text-success"><i class="bi bi-star-fill"></i> 4.8</span>
+                                </div>
+                                <button class="btn btn-success w-100 add-to-cart" 
+                                        data-id="6" 
+                                        data-name="JavaScript от Junior до Senior" 
+                                        data-price="6990">
+                                    <i class="bi bi-cart-plus me-2"></i>В корзину
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
+    </main>
 
-            <!-- Товар 2 -->
-            <div class="col-lg-4 col-md-6 product-item" data-category="course">
-                <div class="card product-card shadow-sm h-100">
-                    <img src="https://via.placeholder.com/600x400/2ecc71/ffffff?text=React+Course" class="card-img-top" alt="Курс React">
-                    <div class="card-body d-flex flex-column">
-                        <span class="badge bg-success mb-2">Курс</span>
-                        <h5 class="card-title">React с нуля до Pro</h5>
-                        <p class="card-text text-muted">30+ часов видео, проекты, сертификат</p>
-                        <div class="mt-auto">
-                            <div class="price mb-3">7 990 ₽</div>
-                            <button class="btn btn-success w-100 add-to-cart" data-id="2" data-name="Курс React" data-price="7990">
-                                В корзину
-                            </button>
+    <!-- Футер -->
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="h6 mb-3">
+                        <i class="bi bi-code-slash me-2"></i>Digital Портфолио
+                    </h5>
+                    <p class="small text-muted mb-0">
+                        Сайт-портфолио студента веб-разработчика. 
+                        Демонстрация проектов, навыков и учебных материалов.
+                    </p>
+                </div>
+                
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="h6 mb-3">Быстрые ссылки</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul class="list-unstyled small">
+                                <li class="mb-2"><a href="../index.html" class="text-white text-decoration-none">Главная</a></li>
+                                <li class="mb-2"><a href="news.html" class="text-white text-decoration-none">Новости</a></li>
+                                <li class="mb-2"><a href="practices.html" class="text-white text-decoration-none">Практики</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul class="list-unstyled small">
+                                <li class="mb-2"><a href="practices.html" class="text-white text-decoration-none">Проекты</a></li>
+                                <li class="mb-2"><a href="goods.html" class="text-white text-decoration-none">Товары</a></li>
+                                <li class="mb-2"><a href="contacts.html" class="text-white text-decoration-none">Контакты</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
+                
+                <div class="col-lg-4">
+                    <h5 class="h6 mb-3">Контакты</h5>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2">
+                            <i class="bi bi-envelope me-2"></i>
+                            <a href="mailto:student@example.com" class="text-white text-decoration-none">student@example.com</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-github me-2"></i>
+                            <a href="https://github.com/swame27" class="text-white text-decoration-none">github.com/swame27</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-telegram me-2"></i>
+                            <a href="#" class="text-white text-decoration-none">@yuri_blashchenko</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
-            <!-- Товар 3 — ещё 6–8 товаров добавь сам по аналогии -->
-            <!-- ... -->
+            
+            <hr class="my-4 border-secondary">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 small">&copy; 2024 Digital Портфолио. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="contacts.html" class="text-white text-decoration-none me-3 small">Контакты</a>
+                    <a href="#" class="text-white text-decoration-none small">Политика конфиденциальности</a>
+                </div>
+            </div>
         </div>
-    </div>
+    </footer>
 
     <!-- Offcanvas корзина -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Корзина (<span id="cartItemsCount">0</span>)</h5>
+            <h5 class="offcanvas-title">
+                <i class="bi bi-cart3 me-2"></i>
+                Корзина (<span id="cartItemsCount">0</span>)
+            </h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body" id="cartItems">
@@ -159,15 +607,90 @@
                 <strong>Итого:</strong>
                 <strong id="cartTotal">0 ₽</strong>
             </div>
-            <button class="btn btn-primary w-100" id="checkoutBtn" disabled>Оформить заказ</button>
+            <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2" 
+                    id="checkoutBtn" 
+                    disabled>
+                <i class="bi bi-credit-card"></i>
+                Оформить заказ
+            </button>
         </div>
     </div>
 
-    <!-- Bootstrap JS + Тема + Корзина -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../scripts/theme-toggle.js"></script>
-
+    
     <script>
+        // Анимация появления при скролле
+        window.addEventListener('DOMContentLoaded', () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+        
+        // Управление темной темой
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = themeToggle.querySelector('.bi-sun-fill');
+            const moonIcon = themeToggle.querySelector('.bi-moon-fill');
+            const themeText = themeToggle.querySelector('.theme-text');
+            
+            // Проверяем сохраненную тему или системные настройки
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const currentTheme = savedTheme === 'auto' ? (prefersDark ? 'dark' : 'light') : savedTheme;
+            
+            // Устанавливаем начальную тему
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+            
+            // Обработчик переключения темы
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                updateThemeIcon(newTheme);
+            });
+            
+            // Обновление иконки темы
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    sunIcon.classList.remove('d-none');
+                    moonIcon.classList.add('d-none');
+                    themeText.textContent = 'Светлая тема';
+                } else {
+                    sunIcon.classList.add('d-none');
+                    moonIcon.classList.remove('d-none');
+                    themeText.textContent = 'Темная тема';
+                }
+            }
+            
+            // Слушаем изменения системной темы
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'auto' || !savedTheme) {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    updateThemeIcon(newTheme);
+                }
+            });
+        });
+
         // Корзина
         let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
@@ -177,26 +700,33 @@
             document.getElementById('cartItemsCount').textContent = count;
 
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            document.getElementById('cartTotal').textContent = total.toLocaleString() + ' ₽';
+            document.getElementById('cartTotal').textContent = total.toLocaleString('ru-RU') + ' ₽';
 
             const container = document.getElementById('cartItems');
             if (cart.length === 0) {
-                container.innerHTML = '<p class="text-muted">Корзина пуста</p>';
+                container.innerHTML = '<p class="text-muted text-center py-4">Корзина пуста</p>';
                 document.getElementById('checkoutBtn').disabled = true;
                 return;
             }
 
             container.innerHTML = cart.map(item => `
-                <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded">
+                <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded" 
+                     style="background-color: var(--secondary-color);">
                     <div>
                         <h6 class="mb-1">${item.name}</h6>
-                        <small class="text-muted">${item.price.toLocaleString()} ₽ × ${item.quantity}</small>
+                        <small class="text-muted">${item.price.toLocaleString('ru-RU')} ₽ × ${item.quantity}</small>
                     </div>
                     <div class="d-flex align-items-center gap-2">
-                        <button class="btn btn-sm btn-outline-secondary" onclick="changeQuantity('${item.id}', -1)">−</button>
-                        <span>${item.quantity}</span>
-                        <button class="btn btn-sm btn-outline-secondary" onclick="changeQuantity('${item.id}', 1)">+</button>
-                        <button class="btn btn-sm btn-danger" onclick="removeFromCart('${item.id}')">×</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="changeQuantity('${item.id}', -1)">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                        <span class="fw-bold">${item.quantity}</span>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="changeQuantity('${item.id}', 1)">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="removeFromCart('${item.id}')">
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </div>
                 </div>
             `).join('');
@@ -213,15 +743,29 @@
             }
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCart();
-            alert('Товар добавлен в корзину!');
+            
+            // Показываем уведомление
+            const notification = document.createElement('div');
+            notification.className = 'alert alert-success position-fixed top-0 end-0 m-3';
+            notification.style.zIndex = '9999';
+            notification.innerHTML = `
+                <i class="bi bi-check-circle me-2"></i>
+                <strong>${name}</strong> добавлен в корзину!
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
         }
 
         function changeQuantity(id, delta) {
             const item = cart.find(i => i.id === id);
             if (item) {
                 item.quantity += delta;
-                if (item.quantity <= 0) removeFromCart(id);
-                else {
+                if (item.quantity <= 0) {
+                    removeFromCart(id);
+                } else {
                     localStorage.setItem('cart', JSON.stringify(cart));
                     updateCart();
                 }
@@ -244,24 +788,61 @@
             });
         });
 
-        // Фильтры и поиск
+        // Фильтры товаров
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 const filter = this.dataset.filter;
                 document.querySelectorAll('.product-item').forEach(item => {
-                    item.style.display = (filter === 'all' || item.dataset.category === filter) ? '' : 'none';
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
                 });
             });
         });
 
-        document.getElementById('searchBtn').addEventListener('click', () => {
+        // Поиск товаров
+        document.getElementById('searchBtn').addEventListener('click', searchProducts);
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchProducts();
+        });
+
+        function searchProducts() {
             const term = document.getElementById('searchInput').value.toLowerCase();
             document.querySelectorAll('.product-item').forEach(item => {
                 const text = item.textContent.toLowerCase();
-                item.style.display = text.includes(term) ? '' : 'none';
+                const category = item.dataset.category;
+                const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+                
+                const matchesSearch = text.includes(term);
+                const matchesFilter = activeFilter === 'all' || category === activeFilter;
+                
+                item.style.display = (matchesSearch && matchesFilter) ? '' : 'none';
             });
+        }
+
+        // Оформление заказа
+        document.getElementById('checkoutBtn').addEventListener('click', function() {
+            if (cart.length === 0) return;
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const orderDetails = cart.map(item => 
+                `${item.name} (${item.quantity} × ${item.price} ₽)`
+            ).join('\n');
+            
+            alert(`Заказ оформлен!\n\n${orderDetails}\n\nИтого: ${total.toLocaleString('ru-RU')} ₽\n\nСпасибо за покупку!`);
+            
+            // Очищаем корзину после оформления заказа
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+            
+            // Закрываем корзину
+            const offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('cartOffcanvas'));
+            offcanvas.hide();
         });
 
         // Инициализация
