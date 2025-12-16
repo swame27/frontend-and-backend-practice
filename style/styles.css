@@ -1,3 +1,31 @@
+:root { 
+    color-scheme: light dark;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+}
+
+html, body { 
+    height: 100%; 
+}
+
+body {
+    margin: 0;
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: #f8fafc;
+    color: #0b1020;
+}
+
+.page {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+main { 
+    flex: 1; 
+}
 /* ===== CSS ПЕРЕМЕННЫЕ ===== */
 :root {
     /* Цветовая схема светлой темы */
